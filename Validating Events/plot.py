@@ -40,18 +40,18 @@ with hep.open(hepmc_file) as f:
       for particle in event.particles:
         momentum =particle.momentum
         pt = momentum.pt()
-        #All final status muons  
+        #All final status muons
         if particle.status == 1 and abs(particle.pid) == 13:
            
             
             histPt.Fill(pt)
             
         # Check if the particle is a muon produced by a decaying 2000013 or -2000013
-            if abs(particle.pid) == 13 and particle.production_vertex and any(p.pid in [2000013, -2000013] for p in particle.production_vertex.particles_in):
-                # Get the final muon descendant of the muon
-                final_muon = get_final_muon_descendant(particle)
-                if final_muon is not None:
-                    histSignalPt.Fill(final_muon.momentum.pt())
+        if abs(particle.pid) == 13 and particle.production_vertex and any(p.pid in [2000013, -2000013] for p in particle.production_vertex.particles_in):
+            # Get the final muon descendant of the muon
+            final_muon = get_final_muon_descendant(particle)
+            if final_muon is not None:
+                histSignalPt.Fill(final_muon.momentum.pt())
 
 canvasPt = ROOT.TCanvas("canvas", "Pt Distribution", 800, 600)
 histPt.Draw()
