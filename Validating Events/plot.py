@@ -12,18 +12,26 @@ hepmc_file = "tag_1_pythia8_events.hepmc"
 histPt = ROOT.TH1F("pt_distribution", "Pt Distribution", 100, 0, 1000) #Plot for all final muons pts
 histSignalPt= ROOT.TH1F("signalpt_distribution", "Signal Pt Distribution", 100, 0, 1000) #Plot for signal muons pts
 
-def is_final_muon_or_has_final_muon_descendant(particle):
-    
+def get_final_muon_descendant(particle):
+    """
+    Get the final state muon descendant of a given particle.
+
+    Parameters
+    ----------
+    particle : pyhepmc.GenParticle
+        The particle to check.
+    """
     # Check if the particle itself is a final state muon
     if particle.status == 1 and abs(particle.pid) == 13:
-        return True
+        return particle
     # If the particle has an end vertex, check its descendants recursively
     elif particle.end_vertex:
         for p in particle.end_vertex.particles_out:
-            if is_final_muon_or_has_final_muon_descendant(p):
-                return True
-    # If the particle is not a final state muon and does not have an end vertex, return False
-    return False
+            final_muon = get_final_muon_descendant(p)
+            if final_muon is not None:
+                return final_muon
+    # If the particle is not a final state muon and does not have an end vertex, return None
+    return None
 
 
 with hep.open(hepmc_file) as f:
@@ -37,12 +45,13 @@ with hep.open(hepmc_file) as f:
            
             
             histPt.Fill(pt)
-        # Only signal muons: final sttaus muons coming from a smuon decay    
-        if abs(particle.pid) == 13 and particle.production_vertex and any(p.pid in [2000013, -2000013] for p in particle.production_vertex.particles_in):
             
-          #Check if the muon is a signal muon
-          if is_final_muon_or_has_final_muon_descendant(particle):
-            histSignalPt.Fill(particle.momentum.pt()) 
+        # Check if the particle is a muon produced by a decaying 2000013 or -2000013
+            if abs(particle.pid) == 13 and particle.production_vertex and any(p.pid in [2000013, -2000013] for p in particle.production_vertex.particles_in):
+                # Get the final muon descendant of the muon
+                final_muon = get_final_muon_descendant(particle)
+                if final_muon is not None:
+                    histSignalPt.Fill(final_muon.momentum.pt())
 
 canvasPt = ROOT.TCanvas("canvas", "Pt Distribution", 800, 600)
 histPt.Draw()
