@@ -16,10 +16,6 @@ def get_final_muon_descendant(particle):
     """
     Get the final state muon descendant of a given particle.
 
-    Parameters
-    ----------
-    particle : pyhepmc.GenParticle
-        The particle to check.
     """
     # Check if the particle itself is a final state muon
     if particle.status == 1 and abs(particle.pid) == 13:
@@ -33,6 +29,7 @@ def get_final_muon_descendant(particle):
     # If the particle is not a final state muon and does not have an end vertex, return None
     return None
 
+muons = []
 
 with hep.open(hepmc_file) as f:
     # Loop over events in the file
@@ -44,8 +41,13 @@ with hep.open(hepmc_file) as f:
         if particle.status == 1 and abs(particle.pid) == 13:
            
             
-            histPt.Fill(pt)
+           histPt.Fill(pt)
+           """
+            This is to get the info of muons with a range of pt
             
+            if pt <=20:
+              muons.append((particle.pid, particle.id, event.event_number))
+              """
         # Check if the particle is a muon produced by a decaying 2000013 or -2000013
         if abs(particle.pid) == 13 and particle.production_vertex and any(p.pid in [2000013, -2000013] for p in particle.production_vertex.particles_in):
             # Get the final muon descendant of the muon
