@@ -12,7 +12,7 @@ with pyhepmc.open(filename) as f:
           savefig(event, f"event{i}.png")
           savefig(event, f"event{i}.pdf")
           for particle in event.particles:
-            if particle.id ==552 and particle.pid==-211:
+            if particle.id ==1399 and particle.pid==-211:
               ver=particle.production_vertex
               print(ver)
               print("i: ",i, "    event#:   ", event.event_number)
