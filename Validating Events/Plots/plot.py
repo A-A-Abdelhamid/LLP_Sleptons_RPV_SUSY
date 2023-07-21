@@ -16,7 +16,10 @@ histEta = ROOT.TH1F("eta_distribution", "Eta Distribution", 100, -3, 3) #Plot fo
 
 histSgEta = ROOT.TH1F("signaleta_distribution", "Eta Distribution", 100, -3, 3) #Plot for signal muons eta
 
-histd0 = ROOT.TH1F("d0_distribution", "d0 Distribution", 100, 0, 1000) #Plot for all final muons d0
+histd0 = ROOT.TH1F("d0_distribution", "d0 Distribution", 1000, 0, 300) #Plot for all final muons d0
+
+
+
 
 def get_final_muon_descendant(particle):
     """
@@ -81,71 +84,86 @@ with hep.open(hepmc_file) as f:
     for event in f:
       for particle in event.particles:
         eta = CalcEta(particle)
-        pt= particle.momentum.pt()
-        #All final status muons
-        if particle.status == 1 and abs(particle.pid) == 13:
+        
+        
+        
            
            #if pt > 65:
-            histPt.Fill(pt)
+            #histPt.Fill(pt)
+            #muons.append(particle) #get all final status muons
            #if eta < 2.5 and eta > -2.5:
-            histEta.Fill(eta)
-            
-            d0=CalcD0(particle)
-            histd0.Fill(d0)
+            #histEta.Fill(eta)
             
             
             
-            """
+            
+            
+        """
             This is to get the info of muons with a range of pt
             
             if pt <=20:
             muons.append((particle.pid, particle.id, event.event_number))
-            """
+        """
         # Check if the particle is a muon produced by a decaying 2000013 or -2000013
         if abs(particle.pid) == 13 and particle.production_vertex and any(p.pid in [2000013, -2000013] for p in particle.production_vertex.particles_in):
             # Get the final muon descendant of the muon
             final_muon = get_final_muon_descendant(particle)
             if final_muon is not None:
-                #if final_muon.momentum.pt()> 65:
-                histSignalPt.Fill(final_muon.momentum.pt())
+                muons.append(final_muon)
+                if final_muon.momentum.pt()> 65:
+                  histSignalPt.Fill(final_muon.momentum.pt())
+                
                 
                 eta= CalcEta(final_muon) #Calculating final muon eta and updating the value of "eta"
-                #if eta < 2.5 and eta > -2.5:
-                histSgEta.Fill(eta)
-                
+                if eta < 2.5 and eta > -2.5:
+                  histSgEta.Fill(eta)
+                  d0=CalcD0(final_muon)
+                  histd0.Fill(d0)
+        
+        if abs(particle.pid) == 13 and particle.status == 1 and particle not in muons:
+          # This is a final state muon that did not come from a 2000013 or -2000013 vertex
+           # Proceed with your analysis...
 
+           pt= particle.momentum.pt()
+           if pt> 65:
+             histPt.Fill(pt)
+           
+           eta= CalcEta (particle)
+           if eta < 2.5 and eta > -2.5:
+             histEta.Fill(eta)
+             
 canvasPt = ROOT.TCanvas("canvasPt", "Pt Distribution", 800, 600)
 histPt.Draw()
-histPt.SetTitle("Final Muons Pt Distribution")
+histPt.SetTitle("Non-Signal Muons Pt > 65 GeV Distribution")
 histPt.GetXaxis().SetTitle("Pt (GeV)")
 histPt.GetYaxis().SetTitle("Counts")
 canvasPt.Update()
-canvasPt.SaveAs("pt_plot_cut.pdf")
+canvasPt.SaveAs("pt_NonSignal_Cut.pdf")
 
 canvasSigPt = ROOT.TCanvas("canvasSigPt", "Signal Pt Distribution", 800, 600)
 histSignalPt.Draw()
-histSignalPt.SetTitle("Signal Muons Pt Distribution")
+histSignalPt.SetTitle("Signal Muons Pt > 65 GeV Distribution")
 histSignalPt.GetXaxis().SetTitle("Pt (GeV)")
 histSignalPt.GetYaxis().SetTitle("Counts")
 canvasSigPt.Update()
-canvasSigPt.SaveAs("Sig_Pt.pdf")
+canvasSigPt.SaveAs("Sig_Pt_Cut.pdf")
 
 
 canvasEta = ROOT.TCanvas("canvasEta", "Eta Distribution", 800, 600)
 histEta.Draw()
-histEta.SetTitle("Final Muons Eta Distribution")
+histEta.SetTitle("Non Signal Muons |Eta| > 2.5  Distribution")
 histEta.GetXaxis().SetTitle("Eta [unitless]")
 histEta.GetYaxis().SetTitle("Counts")
 canvasEta.Update()
-canvasEta.SaveAs("Eta.pdf")
+canvasEta.SaveAs("EtaNonSignal_Cut.pdf")
 
 canvasSgEta = ROOT.TCanvas("canvasSigEta", "Signal Eta Distribution", 800, 600)
 histSgEta.Draw()
-histSgEta.SetTitle("Signal Muons Eta Distribution")
+histSgEta.SetTitle("Signal Muons |Eta| > 2.5 Distribution")
 histSgEta.GetXaxis().SetTitle("Eta [unitless]")
 histSgEta.GetYaxis().SetTitle("Counts")
 canvasSgEta.Update()
-canvasSgEta.SaveAs("Sig_Eta.pdf")
+canvasSgEta.SaveAs("Sig_Eta_Cut.pdf")
 
 
 canvasd0 = ROOT.TCanvas("canvasd0", "d0 Distribution", 800, 600)
@@ -154,5 +172,5 @@ histd0.SetTitle("Final Muons d0 Distribution")
 histd0.GetXaxis().SetTitle("d0 [mm]")
 histd0.GetYaxis().SetTitle("Counts")
 canvasd0.Update()
-canvasd0.SaveAs("d0.pdf")
+#canvasd0.SaveAs("d0.pdf")
 
