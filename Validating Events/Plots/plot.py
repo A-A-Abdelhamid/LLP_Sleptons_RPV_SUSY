@@ -193,7 +193,7 @@ def calculate_median(data):
 def calculate_mean(data):
     mean = np.mean(data)
     return mean
-    
+"""    
 mode_d0 = calculate_mode(data_d0)
 median_d0 = calculate_median(data_d0)
 mean_d0 = calculate_mean(data_d0)
@@ -203,7 +203,7 @@ print("Mode:", mode_d0)
 print("Median:", median_d0)
 print("Mean:", mean_d0)
 
-"""
+
 rounded_d0 = np.round(data_d0, decimals=2)
 d0_counter = Counter(rounded_d0)
 print("Frequency of each d0 value (rounded to two decimal places):")
