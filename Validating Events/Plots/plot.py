@@ -16,10 +16,10 @@ histEta = ROOT.TH1F("eta_distribution", "Eta Distribution", 100, -3, 3) #Plot fo
 
 histSgEta = ROOT.TH1F("signaleta_distribution", "Eta Distribution", 100, -3, 3) #Plot for signal muons eta
 
-histd0 = ROOT.TH1F("d0_distribution", "d0 Distribution", 1000, 0, 300) #Plot for all final muons d0
+histd0 = ROOT.TH1F("d0_distribution", "d0 Distribution", 100, 0, 1) #Plot for all final muons d0
 
 
-
+dataDo=[]
 
 def get_final_muon_descendant(particle):
     """
@@ -106,7 +106,11 @@ with hep.open(hepmc_file) as f:
         """
         # Check if the particle is a muon produced by a decaying 2000013 or -2000013
         if abs(particle.pid) == 13 and particle.production_vertex and any(p.pid in [2000013, -2000013] for p in particle.production_vertex.particles_in):
+            d0=CalcD0(particle)
+            histd0.Fill(d0)
+            dataDo.append(d0)
             # Get the final muon descendant of the muon
+        
             final_muon = get_final_muon_descendant(particle)
             if final_muon is not None:
                 muons.append(final_muon)
@@ -117,8 +121,8 @@ with hep.open(hepmc_file) as f:
                 eta= CalcEta(final_muon) #Calculating final muon eta and updating the value of "eta"
                 if eta < 2.5 and eta > -2.5:
                   histSgEta.Fill(eta)
-                  d0=CalcD0(final_muon)
-                  histd0.Fill(d0)
+                  #d0=CalcD0(final_muon)
+                  #histd0.Fill(d0)
         
         if abs(particle.pid) == 13 and particle.status == 1 and particle not in muons:
           # This is a final state muon that did not come from a 2000013 or -2000013 vertex
@@ -132,6 +136,8 @@ with hep.open(hepmc_file) as f:
            if eta < 2.5 and eta > -2.5:
              histEta.Fill(eta)
              
+             
+            
 canvasPt = ROOT.TCanvas("canvasPt", "Pt Distribution", 800, 600)
 histPt.Draw()
 histPt.SetTitle("Non-Signal Muons Pt > 65 GeV Distribution")
@@ -168,9 +174,40 @@ canvasSgEta.SaveAs("Sig_Eta_Cut.pdf")
 
 canvasd0 = ROOT.TCanvas("canvasd0", "d0 Distribution", 800, 600)
 histd0.Draw()
-histd0.SetTitle("Final Muons d0 Distribution")
+histd0.SetTitle("Signal muons d0 Distribution")
 histd0.GetXaxis().SetTitle("d0 [mm]")
 histd0.GetYaxis().SetTitle("Counts")
 canvasd0.Update()
-#canvasd0.SaveAs("d0.pdf")
+canvasd0.SaveAs("d0.pdf")
 
+data_d0 = np.array([histd0.GetBinContent(i) for i in range(1, histd0.GetNbinsX() + 1)])
+def calculate_mode(data):
+    counts = Counter(data)
+    mode = max(counts, key=counts.get)
+    return mode
+
+def calculate_median(data):
+    median = np.median(data)
+    return median
+
+def calculate_mean(data):
+    mean = np.mean(data)
+    return mean
+    
+mode_d0 = calculate_mode(data_d0)
+median_d0 = calculate_median(data_d0)
+mean_d0 = calculate_mean(data_d0)
+
+print("d0 Distribution:")
+print("Mode:", mode_d0)
+print("Median:", median_d0)
+print("Mean:", mean_d0)
+
+"""
+rounded_d0 = np.round(data_d0, decimals=2)
+d0_counter = Counter(rounded_d0)
+print("Frequency of each d0 value (rounded to two decimal places):")
+for d0_value, frequency in d0_counter.items():
+    print(f"{d0_value:.2f}: {frequency} counts")
+
+"""
