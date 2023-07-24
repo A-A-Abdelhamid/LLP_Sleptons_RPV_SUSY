@@ -180,6 +180,8 @@ histd0.GetYaxis().SetTitle("Counts")
 canvasd0.Update()
 canvasd0.SaveAs("d0.pdf")
 
+
+"""
 data_d0 = np.array([histd0.GetBinContent(i) for i in range(1, histd0.GetNbinsX() + 1)])
 def calculate_mode(data):
     counts = Counter(data)
@@ -193,7 +195,7 @@ def calculate_median(data):
 def calculate_mean(data):
     mean = np.mean(data)
     return mean
-"""    
+    
 mode_d0 = calculate_mode(data_d0)
 median_d0 = calculate_median(data_d0)
 mean_d0 = calculate_mean(data_d0)
