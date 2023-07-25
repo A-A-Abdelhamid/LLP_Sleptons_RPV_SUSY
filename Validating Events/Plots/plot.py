@@ -181,6 +181,8 @@ histd0.GetYaxis().SetTitle("Counts")
 canvasd0.Update()
 canvasd0.SaveAs("d0.pdf")
 
+
+"""
 data_d0 = np.array([histd0.GetBinContent(i) for i in range(1, histd0.GetNbinsX() + 1)])
 def calculate_mode(data):
     counts = Counter(data)
@@ -204,7 +206,7 @@ print("Mode:", mode_d0)
 print("Median:", median_d0)
 print("Mean:", mean_d0)
 
-"""
+
 rounded_d0 = np.round(data_d0, decimals=2)
 d0_counter = Counter(rounded_d0)
 print("Frequency of each d0 value (rounded to two decimal places):")
