@@ -30,7 +30,7 @@ def get_final_muon_descendant(particle):
     if particle.status == 1 and abs(particle.pid) == 13:
         return particle
     # If the particle has an end vertex, check its descendants recursively
-    elif particle.end_vertex:
+    elif particle.end_vertex and abs(particle.pid) == 13:
         for p in particle.end_vertex.particles_out:
             final_muon = get_final_muon_descendant(p)
             if final_muon is not None:
@@ -131,6 +131,7 @@ with hep.open(hepmc_file) as f:
            pt= particle.momentum.pt()
            if pt> 65:
              histPt.Fill(pt)
+             print("Pt,  ", pt, " Event#:  ", event.event_number, "Particle# ", particle.id, " production vertex", particle.production_vertex )
            
            eta= CalcEta (particle)
            if eta < 2.5 and eta > -2.5:
