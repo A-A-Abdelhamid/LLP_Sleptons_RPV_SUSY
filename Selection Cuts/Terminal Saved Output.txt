@@ -1,0 +1,110 @@
+Last login: Fri Aug 11 08:59:10 on ttys000
+(base) alaa@frizzle-06 run_01 % conda activate cleanROOTPythia
+(cleanROOTPythia) alaa@frizzle-06 run_01 % python pt.py                  
+Traceback (most recent call last):
+  File "/Users/alaa/Downloads/MG5_aMC_v3_5_0/valid_0.1ns_400GeV_mu_ve/Events/run_01/pt.py", line 39, in <module>
+    pt_sub = signal_leptons[2]
+             ~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+(cleanROOTPythia) alaa@frizzle-06 run_01 % python pt.py
+GenParticle(FourVector(-881, 890, -378, 1.31e+03), mass=0.10566, pid=13, status=1) GenParticle(FourVector(770, -961, -219, 1.25e+03), mass=0.10566, pid=-13, status=1)
+(cleanROOTPythia) alaa@frizzle-06 run_01 % python pt.py
+16624
+(cleanROOTPythia) alaa@frizzle-06 run_01 % python pt.py
+7879
+(cleanROOTPythia) alaa@frizzle-06 run_01 % python pt.py
+  File "/Users/alaa/Downloads/MG5_aMC_v3_5_0/valid_0.1ns_400GeV_mu_ve/Events/run_01/pt.py", line 113
+    if eta1 - eta2
+                  ^
+SyntaxError: expected ':'
+(cleanROOTPythia) alaa@frizzle-06 run_01 % python pt.py
+Traceback (most recent call last):
+  File "/Users/alaa/Downloads/MG5_aMC_v3_5_0/valid_0.1ns_400GeV_mu_ve/Events/run_01/pt.py", line 98, in <module>
+    particle1_vector = TLorentzVector()
+                       ^^^^^^^^^^^^^^
+NameError: name 'TLorentzVector' is not defined
+(cleanROOTPythia) alaa@frizzle-06 run_01 % python pt.py
+Traceback (most recent call last):
+  File "/Users/alaa/Downloads/MG5_aMC_v3_5_0/valid_0.1ns_400GeV_mu_ve/Events/run_01/pt.py", line 100, in <module>
+    particle1_vector.SetPtEtaPhiM(pt1, eta1, phi1, m1)
+                                  ^^^
+NameError: name 'pt1' is not defined
+(cleanROOTPythia) alaa@frizzle-06 run_01 % python pt.py
+7856
+(cleanROOTPythia) alaa@frizzle-06 run_01 % python 7856/20000
+python: can't open file '/Users/alaa/Downloads/MG5_aMC_v3_5_0/valid_0.1ns_400GeV_mu_ve/Events/run_01/7856/20000': [Errno 2] No such file or directory
+(cleanROOTPythia) alaa@frizzle-06 run_01 % python print(7856/20000)
+zsh: unknown file attribute: 7
+(cleanROOTPythia) alaa@frizzle-06 run_01 % python\
+> 
+Python 3.11.4 | packaged by conda-forge | (main, Jun 10 2023, 18:08:41) [Clang 15.0.7 ] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>> 7856/20000
+0.3928
+>>> exit
+Use exit() or Ctrl-D (i.e. EOF) to exit
+>>> 
+(cleanROOTPythia) alaa@frizzle-06 run_01 % python ac.py            
+7856
+Traceback (most recent call last):
+  File "/Users/alaa/Downloads/MG5_aMC_v3_5_0/valid_0.1ns_400GeV_mu_ve/Events/run_01/ac.py", line 128, in <module>
+    eff = TEfficiency(histogram)
+          ^^^^^^^^^^^^^^^^^^^^^^
+TypeError: none of the 9 overloaded methods succeeded. Full details:
+  TEfficiency::TEfficiency(const TH1& passed, const TH1& total) =>
+    TypeError: takes at least 2 arguments (1 given)
+  TEfficiency::TEfficiency(const TEfficiency& heff) =>
+    TypeError: could not convert argument 1
+  TEfficiency::TEfficiency() =>
+    TypeError: takes at most 0 arguments (1 given)
+  TEfficiency::TEfficiency(const char* name, const char* title, int nbins, double xlow, double xup) =>
+    TypeError: takes at least 5 arguments (1 given)
+  TEfficiency::TEfficiency(const char* name, const char* title, int nbinsx, double xlow, double xup, int nbinsy, double ylow, double yup) =>
+    TypeError: takes at least 8 arguments (1 given)
+  TEfficiency::TEfficiency(const char* name, const char* title, int nbinsx, double xlow, double xup, int nbinsy, double ylow, double yup, int nbinsz, double zlow, double zup) =>
+    TypeError: takes at least 11 arguments (1 given)
+  TEfficiency::TEfficiency(const char* name, const char* title, int nbins, const double* xbins) =>
+    TypeError: takes at least 4 arguments (1 given)
+  TEfficiency::TEfficiency(const char* name, const char* title, int nbinsx, const double* xbins, int nbinsy, const double* ybins) =>
+    TypeError: takes at least 6 arguments (1 given)
+  TEfficiency::TEfficiency(const char* name, const char* title, int nbinsx, const double* xbins, int nbinsy, const double* ybins, int nbinsz, const double* zbins) =>
+    TypeError: takes at least 8 arguments (1 given)
+(cleanROOTPythia) alaa@frizzle-06 run_01 % python ac.py
+7856
+Info in <TEfficiency::TEfficiency>: given histograms are filled with weights
+Info in <TROOT::TEfficiency::SetUseWeightedEvents>: Handle weighted events for computing efficiency
+Traceback (most recent call last):
+  File "/Users/alaa/Downloads/MG5_aMC_v3_5_0/valid_0.1ns_400GeV_mu_ve/Events/run_01/ac.py", line 135, in <module>
+    uncertainty_up = eff.GetEfficiencyErrorUp()
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: double TEfficiency::GetEfficiencyErrorUp(int bin) =>
+    TypeError: takes at least 1 arguments (0 given)
+(cleanROOTPythia) alaa@frizzle-06 run_01 % python ac.py
+7856
+Info in <TEfficiency::TEfficiency>: given histograms are filled with weights
+Info in <TROOT::TEfficiency::SetUseWeightedEvents>: Handle weighted events for computing efficiency
+Traceback (most recent call last):
+  File "/Users/alaa/Downloads/MG5_aMC_v3_5_0/valid_0.1ns_400GeV_mu_ve/Events/run_01/ac.py", line 135, in <module>
+    uncertainty_up = eff.GetEfficiencyErrorUp()
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: double TEfficiency::GetEfficiencyErrorUp(int bin) =>
+    TypeError: takes at least 1 arguments (0 given)
+(cleanROOTPythia) alaa@frizzle-06 run_01 % python ac.py
+7856
+Info in <TEfficiency::TEfficiency>: given histograms are filled with weights
+Info in <TROOT::TEfficiency::SetUseWeightedEvents>: Handle weighted events for computing efficiency
+TEfficiency::GetEfficiencyErrorUp:0: RuntimeWarning: frequentist confidence intervals for weights are only supported by the normal approximation
+Info in <TEfficiency::GetEfficiencyErrorUp>: setting statistic option to kFNormal
+Efficiency: 0.6473836011536876
+Uncertainty (Up): 0.35261639884631235
+Uncertainty (Down): 0.5436607061069177
+(cleanROOTPythia) alaa@frizzle-06 run_01 % python ac.py
+7856
+Info in <TEfficiency::TEfficiency>: given histograms are filled with weights
+Info in <TROOT::TEfficiency::SetUseWeightedEvents>: Handle weighted events for computing efficiency
+TEfficiency::GetEfficiencyErrorUp:0: RuntimeWarning: frequentist confidence intervals for weights are only supported by the normal approximation
+Info in <TEfficiency::GetEfficiencyErrorUp>: setting statistic option to kFNormal
+Efficiency: 0.39297683957781
+Uncertainty (Up): 0.43299669773397065
+Uncertainty (Down): 0.39297683957781
+(cleanROOTPythia) alaa@frizzle-06 run_01 % 
