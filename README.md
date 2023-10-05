@@ -5,6 +5,7 @@ After running the docker image with mg5_aMC (MadGraph)  and following [all the s
 2- run mg5_aMC
 
 3- `import model ./RPVMSSM_UFO/RPVMSSM_UFO/`
+
 4-  `define q = g u c d s u~ c~ d~ s~ b t b~ t~ h01 h2 h3 h+ h-` This will be used to prevent mg5 from creating processes with quarks as mediators. We are interested in processes with the photon (a) and Z-boson (z) as mediators
 
 5-`define p = g u c d s u~ c~ d~ s~ b b~` Our protons are multiparticles consisting of gluons, up, down, strange, charm, and bottom quarks/anti-quarks
