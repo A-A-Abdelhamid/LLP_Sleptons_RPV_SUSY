@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>The Schr&#246;dinger-Pauli Hamiltonian</TITLE>
+<META NAME="description" CONTENT="The Schr&#246;dinger-Pauli Hamiltonian">
+<META NAME="keywords" CONTENT="130_notes">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="130_notes.css">
+
+<LINK REL="next" HREF="node480.html">
+<LINK REL="previous" HREF="node478.html">
+<LINK REL="up" HREF="node477.html">
+<LINK REL="next" HREF="node480.html">
+</HEAD>
+
+<BODY  bgcolor="#ffffff">
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html7078"
+  HREF="node480.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html7074"
+  HREF="node477.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html7068"
+  HREF="node478.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html7076"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html7079"
+  HREF="node480.html">The Dirac Equation</A>
+<B> Up:</B> <A NAME="tex2html7075"
+  HREF="node477.html">Dirac Equation</A>
+<B> Previous:</B> <A NAME="tex2html7069"
+  HREF="node478.html">Dirac's Motivation</A>
+ &nbsp; <B>  <A NAME="tex2html7077"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION000382000000000000000">
+The Schr&#246;dinger-Pauli Hamiltonian</A>
+</H2><FONT COLOR="#000000"><FONT COLOR="#000000">
+In the homework on electrons in an electromagnetic field, we showed that 
+<SPAN ID="hue49017"><B>the Schr&#246;dinger-Pauli Hamiltonian gives the same result as the non-relativistic Hamiltonian we have been using 
+and automatically includes the interaction of the electron's spin with the magnetic field</B></SPAN>.
+</FONT></FONT>
+<DIV ALIGN="CENTER"><FONT COLOR="#000000"></FONT><TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER"><FONT COLOR="#000000"><FONT COLOR="#000000">       
+<FONT COLOR="#000000"><!-- MATH
+ $\displaystyle H={1\over 2m}\left(\vec{\sigma}\cdot[\vec{p}+{e\over c}\vec{A}(\vec{r},t)]\right)^2-e\phi(\vec{r},t)$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="522" HEIGHT="100" ALIGN="MIDDLE" BORDER="0"
+ SRC="img4165.png"
+ ALT="\bgroup\color{black}$\displaystyle H={1\over 2m}\left(\vec{\sigma}\cdot[\vec{p}+{e\over c}\vec{A}(\vec{r},t)]\right)^2-e\phi(\vec{r},t)$\egroup"></SPAN></FONT>     </FONT></FONT></TD>
+</TR>
+</TABLE><FONT COLOR="#000000"></FONT></DIV><FONT COLOR="#000000"><FONT COLOR="#000000">
+The derivation is repeated here.
+Recall that 
+<FONT COLOR="#000000"><!-- MATH
+ $\{\sigma_i,\sigma_j\}=2\delta_{ij}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="199" HEIGHT="64" ALIGN="MIDDLE" BORDER="0"
+ SRC="img4166.png"
+ ALT="\bgroup\color{black}$\{\sigma_i,\sigma_j\}=2\delta_{ij}$\egroup"></SPAN></FONT>, 
+<FONT COLOR="#000000"><!-- MATH
+ $[\sigma_i,\sigma_j]=2\epsilon_{ijk}\sigma_k$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="229" HEIGHT="64" ALIGN="MIDDLE" BORDER="0"
+ SRC="img4167.png"
+ ALT="\bgroup\color{black}$[\sigma_i,\sigma_j]=2\epsilon_{ijk}\sigma_k$\egroup"></SPAN></FONT>, and that the momentum operator
+differentiates both 
+<FONT COLOR="#000000"><SPAN CLASS="MATH"><IMG
+ WIDTH="32" HEIGHT="42" ALIGN="BOTTOM" BORDER="0"
+ SRC="img2619.png"
+ ALT="\bgroup\color{black}$\vec{A}$\egroup"></SPAN></FONT> and the wavefunction.
+</FONT></FONT><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{eqnarray*}
+\left(\vec{\sigma}\cdot[\vec{p}+{e\over c}\vec{A}(\vec{r},t)]\right)^2
+&=&\sigma_i\sigma_j\left(p_ip_j+{e^2\over c^2}A_iA_j+{e\over c}(p_iA_j+A_ip_j)\right) \\
+&=&{1\over 2}(\sigma_i\sigma_j+\sigma_j\sigma_i)\left(p_ip_j+{e^2\over c^2}A_iA_j\right)
++{e\over c}\sigma_i\sigma_j\left(A_jp_i+A_ip_j+{\hbar\over i}{\partial A_j\over\partial x_i}\right) \\
+&=&\delta_{ij}\left(p_ip_j+{e^2\over c^2}A_iA_j\right)
++{e\over c}(\sigma_i\sigma_jA_jp_i+\sigma_j\sigma_iA_jp_i)+{e\hbar\over ic}\sigma_i\sigma_j{\partial A_j\over\partial x_i} \\
+&=&p^2+{e^2\over c^2}A^2+{e\over c}\{\sigma_i,\sigma_j\}A_jp_i+{e\hbar\over ic}
+{1\over 2}\left(\sigma_i\sigma_j+\sigma_i\sigma_j\right){\partial A_j\over\partial x_i} \\
+&=&p^2+{e^2\over c^2}A^2+{e\over c}2\delta_{ij}A_jp_i+{e\hbar\over ic}
+{1\over 2}\left(\sigma_i\sigma_j-\sigma_j\sigma_i+2\delta_{ij}\right){\partial A_j\over\partial x_i} \\
+&=&p^2+{e^2\over c^2}A^2+{2e\over c}\vec{A}\cdot\vec{p}+{e\hbar\over ic}
+\left(i\epsilon_{ijk}\sigma_k+\delta_{ij}\right){\partial A_j\over\partial x_i} \\
+&=&p^2+{e^2\over c^2}A^2+{2e\over c}\vec{A}\cdot\vec{p}+{e\hbar\over ic}
+i\epsilon_{ijk}\sigma_k{\partial A_j\over\partial x_i} \\
+&=&p^2+{e^2\over c^2}A^2+{2e\over c}\vec{A}\cdot\vec{p}+{e\hbar\over c}\vec{\sigma}\cdot\vec{B} \\
+\end{eqnarray*}
+ -->
+<IMG
+ WIDTH="1210" HEIGHT="687" BORDER="0"
+ SRC="img4168.png"
+ ALT="\begin{eqnarray*}
+\left(\vec{\sigma}\cdot[\vec{p}+{e\over c}\vec{A}(\vec{r},t)]\...
+...}\vec{A}\cdot\vec{p}+{e\hbar\over c}\vec{\sigma}\cdot\vec{B} \\
+\end{eqnarray*}"></DIV>
+<BR CLEAR="ALL"><P></P>
+<BR CLEAR="ALL"><P></P><FONT COLOR="#000000"></FONT><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{eqnarray*}
+H&=&{p^2\over 2m}+{e\over mc}\vec{A}\cdot\vec{p}+{e^2\over 2mc^2}A^2-e\phi+{e\hbar\over 2mc}\vec{\sigma}\cdot\vec{B} \\
+H&=&{1\over 2m}[\vec{p}+{e\over c}\vec{A}(\vec{r},t)]^2-e\phi(\vec{r},t)+{e\hbar\over 2mc}\vec{\sigma}\cdot\vec{B}(\vec{r},t) \\
+\end{eqnarray*}
+ -->
+<IMG
+ WIDTH="695" HEIGHT="179" BORDER="0"
+ SRC="img4169.png"
+ ALT="\begin{eqnarray*}
+H&amp;=&amp;{p^2\over 2m}+{e\over mc}\vec{A}\cdot\vec{p}+{e^2\over 2mc...
+...c{r},t)+{e\hbar\over 2mc}\vec{\sigma}\cdot\vec{B}(\vec{r},t) \\
+\end{eqnarray*}"></DIV>
+<BR CLEAR="ALL"><P></P>
+<BR CLEAR="ALL"><P></P><FONT COLOR="#000000"><FONT COLOR="#000000">
+We assume the Lorentz condition applies. 
+This is a step in the right direction.
+The <SPAN ID="hue49033"><B>wavefunction now has two components</B></SPAN> (a spinor) and the effect of spin is included.
+Note that this form of the NR Hamiltonian yields the coupling of the electron spin to a magnetic field 
+with the <SPAN ID="hue49035"><B>correct <SPAN CLASS="MATH"><IMG
+ WIDTH="25" HEIGHT="57" ALIGN="MIDDLE" BORDER="0"
+ SRC="img330.png"
+ ALT="$g$"></SPAN> factor of 2</B></SPAN>.
+The spin-orbit interaction can be correctly derived from this.
+</FONT></FONT>
+<P>
+<FONT COLOR="#000000"></FONT>
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html7078"
+  HREF="node480.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html7074"
+  HREF="node477.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html7068"
+  HREF="node478.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html7076"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html7079"
+  HREF="node480.html">The Dirac Equation</A>
+<B> Up:</B> <A NAME="tex2html7075"
+  HREF="node477.html">Dirac Equation</A>
+<B> Previous:</B> <A NAME="tex2html7069"
+  HREF="node478.html">Dirac's Motivation</A>
+ &nbsp; <B>  <A NAME="tex2html7077"
+  HREF="node1.html">Contents</A></B> </DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+Jim Branson
+2013-04-22
+</ADDRESS>
+</BODY>
+</HTML>

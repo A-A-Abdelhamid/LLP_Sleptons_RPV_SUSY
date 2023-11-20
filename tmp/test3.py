@@ -142,8 +142,7 @@ with hep.open(hepmc_file) as f:
           
       leptons.sort(key=lambda lepton: -lepton.momentum.pt())
 
-        # Select the top two leptons (if there are at least two)
-      #if len(leptons) >= 2:
+        
         
       if len(leptons) == 2:
         
