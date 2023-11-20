@@ -753,7 +753,7 @@ DECAY  1000011   2.136822e-01
 #      PDG        Width
 DECAY  1000012   1.498816e-01
 #
-#      PDG        Width           #only mul > mu ve       
+#      PDG        Width           #only mur > mu ~ve       
 DECAY  1000013   6.500000e-15
 #  BR             NDA  ID1    ID2   ...
    1               2    13  -12 # 0.3183098861837907
