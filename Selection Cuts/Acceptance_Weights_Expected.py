@@ -57,10 +57,13 @@ for i in range(len(Pt)):
     hist.SetBinContent(x_bin, y_bin, eff[i])
 
 # Draw the histogram
-c = ROOT.TCanvas("canvas", "Pt-do eff", 800, 600)
+cH = ROOT.TCanvas("canvasH", "Pt-do eff", 800, 600)
+hist.GetXaxis().SetTitle("Pt (GeV)")
+hist.GetYaxis().SetTitle("d0 (mm)")
+hist.SetTitle("Muon reconstruction efficiency")
 hist.Draw("COLZ")
-c.Update()
-c.SaveAs("effHisto.pdf")
+cH.Update()
+cH.SaveAs("effHisto.pdf")
 
 
 
@@ -151,7 +154,7 @@ hist= graph.GetHistogram()
 
 histo = ROOT.TH1F("weights","weights",200,0,1)
 
-expected =ROOT.TH1F("Expected","Expected",1,0,1)
+expected =ROOT.TH1F("Expected","Expected Number of Events",1,0,1)
 
 def eff_func (lepton):
 
@@ -271,8 +274,11 @@ c.Update()
 c.SaveAs("expected.pdf")
 area = (expected.GetSumOfWeights())
 
-print(f"Area under the histogram", area)
+print(f"Area under the histogram (number of surviving events): ", area)
+bincontent =expected.GetBinContent(1)
+error= expected.GetBinError(1)
+print("Bin content: ",bincontent, " error = +/- ", error)
 sigma=  0.0005221 * 1000 # 0.5221 fp
 L = 139 #1/fb
 n_gen=20000 # # of generated events
-print("Expected events: ", (area*sigma*L)/n_gen)
+print("Expected events: ", (area*sigma*L)/n_gen, "  +/- ",((error*sigma*L)/n_gen), " events")
