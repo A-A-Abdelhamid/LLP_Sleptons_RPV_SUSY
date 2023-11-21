@@ -38,3 +38,6 @@ When you change the mass for the right-handed smuons (2000013), MadGraph expects
 12-` launch`
 
 13- `shower=Pythia8`
+
+
+To apply the selection cuts (after you validate your sample), go to [Selection Cuts](https://github.com/A-A-Abdelhamid/LLP_Sleptons_RPV_SUSY/tree/main/Selection%20Cuts#readme)
