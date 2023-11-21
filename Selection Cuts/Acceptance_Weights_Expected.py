@@ -182,7 +182,7 @@ def process_pairs(lepton1,lepton2):
       return True
         
     else:
-      return False  # Exit the loop if delta_R < 0.2
+      return False 
 
     
   
