@@ -152,7 +152,7 @@ graph = directory.Get("Graph2D_y1")
 hist= graph.GetHistogram()
 """
 
-histo = ROOT.TH1F("weights","weights",200,0,1)
+histo = ROOT.TH1F("weights","weights",100,0,1)
 
 expected =ROOT.TH1F("Expected","Expected Number of Events",1,0,1)
 
@@ -248,8 +248,8 @@ with hep.open(hepmc_file) as f:
           
         
         p_event= weight(weights)
-        if p_event != 0:
-          histo.Fill(p_event)
+        #if p_event != 0:
+        histo.Fill(p_event)
           
         expected.Fill(0.5,p_event)
         
@@ -282,3 +282,8 @@ sigma=  0.0005221 * 1000 # 0.5221 fp
 L = 139 #1/fb
 n_gen=20000 # # of generated events
 print("Expected events: ", (area*sigma*L)/n_gen, "  +/- ",((error*sigma*L)/n_gen), " events")
+
+chi = ROOT.TCanvas("canvaschi", "weights", 800, 600)
+histo.Draw()
+chi.Update()
+chi.SaveAs("weights_dist.pdf")
