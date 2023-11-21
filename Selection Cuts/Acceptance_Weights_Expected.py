@@ -221,7 +221,7 @@ with hep.open(hepmc_file) as f:
       eta=[]
       phi=[]
       mass=[]
-      acc=[]
+      acc=[] #Accepted leptons
       weights= []
       if len(leptons) >= 2:
       
@@ -241,10 +241,9 @@ with hep.open(hepmc_file) as f:
                   
         for k in range(len(acc)):
           eff= eff_func(acc[k])
-          #print("pt: ", acc[k].momentum.pt()," ", CalcD0(acc[k]) , " ","eff: ", eff)
+         
           weights.append(eff)
-        #print(acc)
-        #print("weights: ", weights)
+
           
         
         p_event= weight(weights)
@@ -253,18 +252,16 @@ with hep.open(hepmc_file) as f:
           
         expected.Fill(0.5,p_event)
         
-        #print("weight: ", p_event)
+    
         
        
         weight_sum= weight_sum + p_event
         
         
-        #print("sum: ", weight_sum)
+       
         
         if p_event > 0 :
           count=count+1
-          #print((weight_sum))
-          #histo.Fill(0,p_event)
         #print("count: ", count)
         
 
