@@ -15,6 +15,8 @@ from operator import mul
 import json
 from array import array
 
+# CHANGE ME :)
+hepmc_file = "../../run_data/run_17/Events/run_01/tag_1_pythia8_events.hepmc"
 
 # Number of points in gradient of the Eff histogram
 nRGBs = 5
@@ -30,7 +32,7 @@ blue  = array('d', [241/255.0, 221/255.0, 212/255.0, 190/255.0, 133/255.0])
 # Create the gradient color table
 ROOT.TColor.CreateGradientColorTable(nRGBs, stops, red, green, blue, 255)
 ROOT.gStyle.SetNumberContours(255)
-hist =     ROOT.TH2F("hist", "hist",10, 65, 765, 8, 0, 400)
+hist = ROOT.TH2F("hist", "hist",10, 65, 765, 8, 0, 400)
 hist.SetStats(0)
 # Initialize the ROOT TArrays
 Pt = []
@@ -45,16 +47,16 @@ with open(file_path, 'r') as f:
 values_data = json_data.get('values', None)
 
 for entry in values_data:
-    Pt.append(float(entry['x'][0]['value']))
-    d0.append(float(entry['x'][1]['value']))
-    eff.append(float(entry['y'][0]['value']))
+    Pt.append( float( entry['x'][0]['value'] ) )
+    d0.append( float( entry['x'][1]['value'] ) )
+    eff.append( float( entry['y'][0]['value'] ) )
 
 # Fill the histogram
-for i in range(len(Pt)):
+for i in range( len(Pt) ):
     # Adding 1 to ensure we start from bin 1
-    x_bin = hist.GetXaxis().FindBin(Pt[i])
-    y_bin = hist.GetYaxis().FindBin(d0[i])
-    hist.SetBinContent(x_bin, y_bin, eff[i])
+    x_bin = hist.GetXaxis().FindBin( Pt[i] )
+    y_bin = hist.GetYaxis().FindBin( d0[i] )
+    hist.SetBinContent( x_bin, y_bin, eff[i] )
 
 # Draw the histogram
 cH = ROOT.TCanvas("canvasH", "Pt-do eff", 800, 600)
@@ -65,8 +67,6 @@ hist.Draw("COLZ")
 cH.Update()
 cH.SaveAs("effHisto.pdf")
 
-
-
 def create_vector(particle):
     vector = TLorentzVector()
     pt = particle.momentum.pt()
@@ -75,7 +75,6 @@ def create_vector(particle):
     mass = particle.generated_mass
     vector.SetPtEtaPhiM(pt, eta, phi, mass)
     return vector
-
 
 def weight(e_list):
     # Calculate the first term: Product of (1 - e_i) for i=1 to n
@@ -94,27 +93,26 @@ def weight(e_list):
     result = 1 - (first_term + second_term)
     
     return result
+
 def CalcEta(particle):
   """
   Calculate eta of a particle
   """
   momentum =particle.momentum
   pt = momentum.pt()
-  px=momentum.px
-  py=momentum.py
-  pz=momentum.pz
-  p=momentum.length()
+  px = momentum.px
+  py = momentum.py
+  pz = momentum.pz
+  p = momentum.length()
   if pz == p:
     etaC = np.inf  # or a large number
   elif pz == -p:
     etaC = -np.inf  # or a large negative number
   else:
-    etaC = np.arctanh(pz/p)
+    etaC = np.arctanh(pz / p)
   return etaC
   
-
 def CalcD0(particle):
-
   """
   Calculates d0 of a particle's track
   Assuming lieanr tracks since there is no mgentic field
@@ -122,27 +120,26 @@ def CalcD0(particle):
   d0 is in the transverse plane
   d0 = [vertex x spatial component * (Py/Pt)] - [vertex y spatial component * (Px/Pt)]
   """
-  momentum =particle.momentum
+  momentum = particle.momentum
   pt = momentum.pt()
-  px=momentum.px
-  py=momentum.py
+  px = momentum.px
+  py = momentum.py
   
-  ver= particle.production_vertex.position
-  xver= ver.x
-  yver= ver.y
+  ver = particle.production_vertex.position
+  xver = ver.x
+  yver = ver.y
 
-  d0= (xver* (py/pt)) - (yver* (px/pt))
+  d0 = (xver* (py/pt)) - (yver* (px/pt))
   return d0
 
 def CalcPhi(particle):
 
-  momentum =particle.momentum
-  px=momentum.px
-  py=momentum.py
+  momentum = particle.momentum
+  px = momentum.px
+  py = momentum.py
   phi = np.arctan2(py, px)
   return phi
- 
- 
+
 """
 "file_path = "HEPData-ins1831504-v2-pt-d0_muon_efficiency.root"
 root_file = TFile.Open(file_path)
@@ -154,128 +151,99 @@ hist= graph.GetHistogram()
 
 histo = ROOT.TH1F("weights","weights",200,0,1)
 
-expected =ROOT.TH1F("Expected","Expected Number of Events",1,0,1)
+expected = ROOT.TH1F("Expected","Expected Number of Events",1,0,1)
 
-def eff_func (lepton):
-
-  x= lepton.momentum.pt()
-  y= abs(CalcD0(lepton))
+def eff_func(lepton):
+  x = lepton.momentum.pt()
+  y = abs( CalcD0(lepton) )
   binX = hist.GetXaxis().FindBin(x)
   binY = hist.GetYaxis().FindBin(y)
     
-  eff_value= hist.GetBinContent(binX, binY)
+  eff_value = hist.GetBinContent(binX, binY)
   return eff_value
 
-good_event=0
+good_event = 0
 
 def process_pairs(lepton1,lepton2):
     lead, sub = lepton1, lepton2
-      
-        
 
     particle1_vector = create_vector(lead)
     particle2_vector = create_vector(sub)
         
     delta_R = particle1_vector.DeltaR(particle2_vector)
 
-    if delta_R >= 0.2:
+    if delta_R  >= 0.2:
       return True
         
     else:
       return False 
 
-    
-  
-hepmc_file = "tag_1_pythia8_events.hepmc"
-
-
 #hist =  ROOT.TH2F("hist", "hist" ,10, 65, 765, 8, 0, 400)
-count=0
-weight_sum=0
+count = 0
+weight_sum = 0
 with hep.open(hepmc_file) as f:
     # Loop over events in the file
     
     for event in f:
-      particles=[]
-      leptons=[]
-      signal_leptons=[]
-      pt_sub=0
-      pt_leading=0
-      list=[]
+      particles = []
+      leptons = []
+      signal_leptons = []
+      pt_sub = 0
+      pt_leading = 0
+      list = []
       for particle in event.particles:
         
         #if particle.status == 1:
          # particles.append(particle)
           
-        if abs(particle.pid) == 13 and particle.status == 1 and particle.momentum.pt()> 65 and CalcEta(particle)> -2.5 and CalcEta(particle) < 2.5 and abs(CalcD0(particle))>3 and abs(CalcD0(particle)) <300 :
-        
+        if abs(particle.pid) == 13 and particle.status == 1 and particle.momentum.pt() > 65 and CalcEta(particle) > -2.5 and CalcEta(particle) < 2.5 and abs( CalcD0(particle) ) > 3 and abs( CalcD0(particle) ) < 300 :
           leptons.append(particle)
-      
-          
-      leptons.sort(key=lambda lepton: -lepton.momentum.pt())
+
+      leptons.sort( key=lambda lepton: -lepton.momentum.pt() )
 
         # Select the top two leptons (if there are at least two)
       #if len(leptons) >= 2:
       
-      pt=[]
-      eta=[]
-      phi=[]
-      mass=[]
-      acc=[] #Accepted leptons
-      weights= []
+      pt = []
+      eta = []
+      phi = []
+      mass = []
+      acc = [] #Accepted leptons
+      weights = []
       if len(leptons) >= 2:
-      
         n = len(leptons)
         for i in range(n):
           for j in range(n):
             if j > i:
-              check_R = process_pairs(leptons[i],leptons[j])
+              check_R = process_pairs( leptons[i],leptons[j] )
               if check_R == True:
-              
                 if leptons[i] not in acc:
-                  acc.append(leptons[i])
-                  
+                  acc.append( leptons[i] )
                 if leptons[j] not in acc:
-                  acc.append(leptons[j])
-                  
-                  
-        for k in range(len(acc)):
-          eff= eff_func(acc[k])
-         
+                  acc.append( leptons[j] )
+        for k in range( len(acc) ):
+          eff = eff_func( acc[k] )
           weights.append(eff)
-
-          
-        
         p_event= weight(weights)
         if p_event != 0:
           histo.Fill(p_event)
-          
-        expected.Fill(0.5,p_event)
-        
-    
-        
-       
-        weight_sum= weight_sum + p_event
-        
-        
-       
-        
+        expected.Fill(0.5, p_event)
+        weight_sum = weight_sum + p_event
         if p_event > 0 :
-          count=count+1
+          count = count + 1
         #print("count: ", count)
-        
 
 c = ROOT.TCanvas("canvas", "Expected", 800, 600)
 expected.Draw("COLZ")
 c.Update()
 c.SaveAs("expected.pdf")
-area = (expected.GetSumOfWeights())
+area = ( expected.GetSumOfWeights() )
 
 print(f"Area under the histogram (number of surviving events): ", area)
-bincontent =expected.GetBinContent(1)
-error= expected.GetBinError(1)
-print("Bin content: ",bincontent, " error = +/- ", error)
-sigma=  0.0005221 * 1000 # 0.5221 fp
+bincontent = expected.GetBinContent(1)
+error = expected.GetBinError(1)
+print("Bin content: ", bincontent, " error = +/- ", error)
+sigma =  0.0005221 * 1000 # 0.5221 fp
 L = 139 #1/fb
-n_gen=20000 # # of generated events
-print("Expected events: ", (area*sigma*L)/n_gen, "  +/- ",((error*sigma*L)/n_gen), " events")
+n_gen = 20000 # # of generated events
+print("Expected events: ", (area * sigma * L) / n_gen, "  +/- ",( (error * sigma * L) / n_gen), " events")
