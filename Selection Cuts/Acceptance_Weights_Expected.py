@@ -53,7 +53,7 @@ for entry in values_data:
 
 # Fill the histogram
 for i in range( len(Pt) ):
-    # Adding 1 to ensure we start from bin 1
+    # Adding 1 to ensure we start from bin 1 ### TODO Is something missing here?
     x_bin = hist.GetXaxis().FindBin( Pt[i] )
     y_bin = hist.GetYaxis().FindBin( d0[i] )
     hist.SetBinContent( x_bin, y_bin, eff[i] )
@@ -95,10 +95,7 @@ def weight(e_list):
     return result
 
 def CalcEta(particle):
-  """
-  Calculate eta of a particle
-  """
-  momentum =particle.momentum
+  momentum = particle.momentum
   pt = momentum.pt()
   px = momentum.px
   py = momentum.py
@@ -133,21 +130,11 @@ def CalcD0(particle):
   return d0
 
 def CalcPhi(particle):
-
   momentum = particle.momentum
   px = momentum.px
   py = momentum.py
   phi = np.arctan2(py, px)
   return phi
-
-"""
-"file_path = "HEPData-ins1831504-v2-pt-d0_muon_efficiency.root"
-root_file = TFile.Open(file_path)
-directory = root_file.GetDirectory("pt-d0 muon efficiency")
-graph = directory.Get("Graph2D_y1")
-
-hist= graph.GetHistogram()
-"""
 
 histo = ROOT.TH1F("weights","weights",200,0,1)
 
@@ -162,76 +149,49 @@ def eff_func(lepton):
   eff_value = hist.GetBinContent(binX, binY)
   return eff_value
 
-good_event = 0
-
 def process_pairs(lepton1,lepton2):
-    lead, sub = lepton1, lepton2
-
-    particle1_vector = create_vector(lead)
-    particle2_vector = create_vector(sub)
+    particle1_vector = create_vector(lepton1)
+    particle2_vector = create_vector(lepton2)
         
     delta_R = particle1_vector.DeltaR(particle2_vector)
 
     if delta_R  >= 0.2:
       return True
-        
     else:
       return False 
 
-#hist =  ROOT.TH2F("hist", "hist" ,10, 65, 765, 8, 0, 400)
-count = 0
 weight_sum = 0
+
+# TODO Get rid of overloaded f variable (see .json file open() @44)
 with hep.open(hepmc_file) as f:
-    # Loop over events in the file
-    
     for event in f:
-      particles = []
-      leptons = []
-      signal_leptons = []
-      pt_sub = 0
-      pt_leading = 0
-      list = []
-      for particle in event.particles:
-        
-        #if particle.status == 1:
-         # particles.append(particle)
-          
-        if abs(particle.pid) == 13 and particle.status == 1 and particle.momentum.pt() > 65 and CalcEta(particle) > -2.5 and CalcEta(particle) < 2.5 and abs( CalcD0(particle) ) > 3 and abs( CalcD0(particle) ) < 300 :
-          leptons.append(particle)
-
-      leptons.sort( key=lambda lepton: -lepton.momentum.pt() )
-
-        # Select the top two leptons (if there are at least two)
-      #if len(leptons) >= 2:
-      
-      pt = []
-      eta = []
-      phi = []
-      mass = []
-      acc = [] #Accepted leptons
-      weights = []
-      if len(leptons) >= 2:
-        n = len(leptons)
-        for i in range(n):
-          for j in range(n):
-            if j > i:
-              check_R = process_pairs( leptons[i],leptons[j] )
-              if check_R == True:
-                if leptons[i] not in acc:
-                  acc.append( leptons[i] )
-                if leptons[j] not in acc:
-                  acc.append( leptons[j] )
-        for k in range( len(acc) ):
-          eff = eff_func( acc[k] )
-          weights.append(eff)
-        p_event= weight(weights)
-        if p_event != 0:
-          histo.Fill(p_event)
-        expected.Fill(0.5, p_event)
-        weight_sum = weight_sum + p_event
-        if p_event > 0 :
-          count = count + 1
-        #print("count: ", count)
+        leptons = []
+        for particle in event.particles:
+            # TODO @171 can be condensed with a boolean function.
+            if abs(particle.pid) == 13 and particle.status == 1 and particle.momentum.pt() > 65 and CalcEta(particle) > -2.5 and CalcEta(particle) < 2.5 and abs( CalcD0(particle) ) > 3 and abs( CalcD0(particle) ) < 300 :
+                leptons.append(particle)
+        leptons.sort( key=lambda lepton: -lepton.momentum.pt() )
+        acc = [] #Accepted leptons
+        weights = []
+        if len(leptons) >= 2:
+            n = len(leptons)
+            for i in range(n):
+                for j in range(n):
+                    if j > i:
+                        check_R = process_pairs( leptons[i],leptons[j] )
+                        if check_R == True:
+                            if leptons[i] not in acc:
+                                acc.append( leptons[i] )
+                            if leptons[j] not in acc:
+                                acc.append( leptons[j] )
+            for k in range( len(acc) ):
+                eff = eff_func( acc[k] )
+                weights.append(eff)
+            p_event = weight(weights)
+            if p_event != 0:
+                histo.Fill(p_event)
+            expected.Fill(0.5, p_event)
+            weight_sum = weight_sum + p_event
 
 c = ROOT.TCanvas("canvas", "Expected", 800, 600)
 expected.Draw("COLZ")

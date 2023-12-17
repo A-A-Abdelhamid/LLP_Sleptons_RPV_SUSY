@@ -1,7 +1,7 @@
 import pyhepmc
 from pyhepmc.view import savefig
 
-filename = "tag_1_pythia8_events.hepmc"
+filename = "../../run_data/run_17/Events/run_01/tag_1_pythia8_events.hepmc"
 # pyhepmc.open can read most HepMC formats using auto-detection
 with pyhepmc.open(filename) as f:
     # Loop over events in the file
