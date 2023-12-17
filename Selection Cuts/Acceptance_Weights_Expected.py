@@ -16,7 +16,7 @@ import json
 from array import array
 
 # CHANGE ME :)
-hepmc_file = "../../run_data/run_17/Events/run_01/tag_1_pythia8_events.hepmc"
+hepmc_file = "../../run_data/run_15/Events/run_01/tag_1_pythia8_events.hepmc"
 
 # Number of points in gradient of the Eff histogram
 nRGBs = 5
