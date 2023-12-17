@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import pyhepmc as hep
+https://onedrive.live.com/view.aspx?resid=E45E9047A74C6531%219813&id=documents&wd=target%28Writing.one%7CA3B38BFD-D18D-4FB0-B769-058B7E902895%2FP5%7C4D6DB216-5D41-46C2-A2A2-DCB1A320CA33%2F%29
+onenote:https://d.docs.live.net/e45e9047a74c6531/Documents/Project%20Bubbles/Writing.one#P5&section-id={A3B38BFD-D18D-4FB0-B769-058B7E902895}&page-id={4D6DB216-5D41-46C2-A2A2-DCB1A320CA33}&endimport pyhepmc as hep
 import pyhepmc.io as ihep
 import pyhepmc.view as vhep
 import uproot
@@ -160,8 +161,6 @@ def process_pairs(lepton1,lepton2):
     else:
       return False 
 
-weight_sum = 0
-
 # TODO Get rid of overloaded f variable (see .json file open() @44)
 with hep.open(hepmc_file) as f:
     for event in f:
@@ -191,7 +190,6 @@ with hep.open(hepmc_file) as f:
             if p_event != 0:
                 histo.Fill(p_event)
             expected.Fill(0.5, p_event)
-            weight_sum = weight_sum + p_event
 
 c = ROOT.TCanvas("canvas", "Expected", 800, 600)
 expected.Draw("COLZ")
