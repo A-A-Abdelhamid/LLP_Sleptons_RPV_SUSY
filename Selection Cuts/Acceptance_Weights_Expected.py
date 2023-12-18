@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-https://onedrive.live.com/view.aspx?resid=E45E9047A74C6531%219813&id=documents&wd=target%28Writing.one%7CA3B38BFD-D18D-4FB0-B769-058B7E902895%2FP5%7C4D6DB216-5D41-46C2-A2A2-DCB1A320CA33%2F%29
-onenote:https://d.docs.live.net/e45e9047a74c6531/Documents/Project%20Bubbles/Writing.one#P5&section-id={A3B38BFD-D18D-4FB0-B769-058B7E902895}&page-id={4D6DB216-5D41-46C2-A2A2-DCB1A320CA33}&endimport pyhepmc as hep
+import pyhepmc as hep
 import pyhepmc.io as ihep
 import pyhepmc.view as vhep
 import uproot
@@ -10,7 +9,6 @@ from collections import Counter
 import math
 from ROOT import TLorentzVector
 from ROOT import TEfficiency, TFile, TH1F, TGraph2DErrors, gStyle, gROOT, TColor, TLatex
-import random
 from functools import reduce
 from operator import mul
 import json
@@ -68,9 +66,13 @@ hist.Draw("COLZ")
 cH.Update()
 cH.SaveAs("effHisto.pdf")
 
+# pT conversion from MeV to GeV
+def mev_to_gev(mev):
+    return mev * 10**-3
+
 def create_vector(particle):
     vector = TLorentzVector()
-    pt = particle.momentum.pt()
+    pt = mev_to_gev( particle.momentum.pt() )
     eta = CalcEta(particle)
     phi = CalcPhi(particle)
     mass = particle.generated_mass
@@ -97,7 +99,7 @@ def weight(e_list):
 
 def CalcEta(particle):
   momentum = particle.momentum
-  pt = momentum.pt()
+  pt = mev_to_gev( momentum.pt() )
   px = momentum.px
   py = momentum.py
   pz = momentum.pz
@@ -119,7 +121,7 @@ def CalcD0(particle):
   d0 = [vertex x spatial component * (Py/Pt)] - [vertex y spatial component * (Px/Pt)]
   """
   momentum = particle.momentum
-  pt = momentum.pt()
+  pt = mev_to_gev( momentum.pt() )
   px = momentum.px
   py = momentum.py
   
@@ -137,12 +139,10 @@ def CalcPhi(particle):
   phi = np.arctan2(py, px)
   return phi
 
-histo = ROOT.TH1F("weights","weights",200,0,1)
-
 expected = ROOT.TH1F("Expected","Expected Number of Events",1,0,1)
 
 def eff_func(lepton):
-  x = lepton.momentum.pt()
+  x = mev_to_gev( lepton.momentum.pt() )
   y = abs( CalcD0(lepton) )
   binX = hist.GetXaxis().FindBin(x)
   binY = hist.GetYaxis().FindBin(y)
@@ -167,7 +167,7 @@ with hep.open(hepmc_file) as f:
         leptons = []
         for particle in event.particles:
             # TODO @171 can be condensed with a boolean function.
-            if abs(particle.pid) == 13 and particle.status == 1 and particle.momentum.pt() > 65 and CalcEta(particle) > -2.5 and CalcEta(particle) < 2.5 and abs( CalcD0(particle) ) > 3 and abs( CalcD0(particle) ) < 300 :
+            if abs(particle.pid) == 13 and particle.status == 1 and mev_to_gev( particle.momentum.pt() ) > 65 and CalcEta(particle) > -2.5 and CalcEta(particle) < 2.5 and abs( CalcD0(particle) ) > 3 and abs( CalcD0(particle) ) < 300 :
                 leptons.append(particle)
         leptons.sort( key=lambda lepton: -lepton.momentum.pt() )
         acc = [] #Accepted leptons
@@ -187,8 +187,6 @@ with hep.open(hepmc_file) as f:
                 eff = eff_func( acc[k] )
                 weights.append(eff)
             p_event = weight(weights)
-            if p_event != 0:
-                histo.Fill(p_event)
             expected.Fill(0.5, p_event)
 
 c = ROOT.TCanvas("canvas", "Expected", 800, 600)
