@@ -121,7 +121,7 @@ def CalcD0(particle):
   d0 = [vertex x spatial component * (Py/Pt)] - [vertex y spatial component * (Px/Pt)]
   """
   momentum = particle.momentum
-  pt = mev_to_gev( momentum.pt() )
+  pt = momentum.pt()
   px = momentum.px
   py = momentum.py
   
@@ -161,12 +161,12 @@ def process_pairs(lepton1,lepton2):
     else:
       return False 
 
-# TODO Get rid of overloaded f variable (see .json file open() @44)
+# TODO Get rid of overloaded f variable (see .json file open() @43)
 with hep.open(hepmc_file) as f:
     for event in f:
         leptons = []
         for particle in event.particles:
-            # TODO @171 can be condensed with a boolean function.
+            # TODO @170 can be condensed with a boolean function.
             if abs(particle.pid) == 13 and particle.status == 1 and mev_to_gev( particle.momentum.pt() ) > 65 and CalcEta(particle) > -2.5 and CalcEta(particle) < 2.5 and abs( CalcD0(particle) ) > 3 and abs( CalcD0(particle) ) < 300 :
                 leptons.append(particle)
         leptons.sort( key=lambda lepton: -lepton.momentum.pt() )
