@@ -15,7 +15,7 @@ import json
 from array import array
 
 # CHANGE ME :)
-hepmc_file = "../../run_data/run_17/Events/run_01/tag_1_pythia8_events.hepmc"
+hepmc_file = "../../run_data/run_15/Events/run_01/tag_1_pythia8_events.hepmc"
 
 # Read the JSON file
 file_path = "Eff.json"
@@ -31,14 +31,14 @@ efficiency_array = []
 for value in values_data:
     pT_array.append( float( value['x'][0]['value'] ) )
     d0_array.append( float( value['x'][1]['value'] ) )
-    efficiency_array.append(  float( value['y'][0]['value'] ) )
+    efficiency_array.append( [ float( value['x'][0]['value'] ), float( value['x'][1]['value'] ), float( value['y'][0]['value'] ) ] )
 
 # pT conversion from MeV to GeV
 def mev_to_gev(mev):
     return mev * 10**-3
 
 # Why not use particle.momentum.eta()?
-def CalcEta(particle):
+def calc_eta(particle):
     pt = mev_to_gev( particle.momentum.pt() )
     px = particle.momentum.px
     py = particle.momentum.py
@@ -53,7 +53,7 @@ def CalcEta(particle):
         etaC = np.arctanh(pz / p)
     return etaC
 
-def CalcPhi(particle):
+def calc_phi(particle):
     px = particle.momentum.px
     py = particle.momentum.py
     return np.arctan2(py, px)
@@ -61,8 +61,8 @@ def CalcPhi(particle):
 def create_vector(particle):
     vector = TLorentzVector()
     pt = mev_to_gev( particle.momentum.pt() )
-    eta = CalcEta(particle)
-    phi = CalcPhi(particle)
+    eta = calc_eta(particle)
+    phi = calc_phi(particle)
     mass = particle.generated_mass
     vector.SetPtEtaPhiM(pt, eta, phi, mass)
     return vector
@@ -82,7 +82,7 @@ def weight(e_list):
     
     return 1 - (first_term + second_term)
   
-def CalcD0(particle):
+def calc_d0(particle):
     """
     Assuming linear tracks since there is no magnetic field
     d0 = production vertex vector X produced particle momentum vector
@@ -100,33 +100,43 @@ def CalcD0(particle):
 
 expected = ROOT.TH1F("Expected","Expected Number of Events",1,0,1)
 
-# Return the index of the bin in which a value would be found
-# NOTE This will return the largest index if multiple are found
+# Return the bin in which a value would be found
+# NOTE This functions properly when all bins are the same size
 def bin_finder(value, bin_array):
-    index = 0
-    for bin in bin_array:
-        if value <= bin:
-            index += 1
-        if value > bin:
+    bin_width = bin_array[1] - bin_array[0]
+    containing_bin = bin_array[0]
+    num_bins = len(bin_array)
+    for b in bin_array:
+        if value <= b + (bin_width / 2):
+            containing_bin = b
             break
-    return index
+        if b == bin_array[num_bins - 1]:
+            if value > b + (bin_width / 2):
+                return 0
+    return containing_bin
 
-def eff_func(particle):
+def get_efficiency(particle):
     pt = mev_to_gev( particle.momentum.pt() )
-    d0 = abs( CalcD0(particle) )
+    d0 = abs( calc_d0(particle) )
 
-    pT_index = bin_finder(pt, pT_array)
-    d0_index = bin_finder(d0, d0_array)
+    pT_bin = bin_finder( pt, np.unique(pT_array) )
+    d0_bin = bin_finder( d0, np.unique(d0_array) )
+
+    eff_value = 0
+    for momentum, impact, efficiency in efficiency_array:
+        if (momentum, impact) == (pT_bin, d0_bin):
+            eff_value = efficiency
+            break
 
     return eff_value
 
-def process_pairs(particle1, particle2):
+def delta_r_cut(particle1, particle2):
     particle1_vector = create_vector(particle1)
     particle2_vector = create_vector(particle2)
         
-    delta_R = particle1_vector.DeltaR(particle2_vector)
+    delta_r = particle1_vector.DeltaR(particle2_vector)
 
-    if delta_R  >= 0.2:
+    if delta_r  >= 0.2:
       return True
     else:
       return False 
@@ -134,8 +144,8 @@ def process_pairs(particle1, particle2):
 def passes_first_cuts(particle):
     if abs(particle.pid) == 13 and particle.status == 1:
         if  mev_to_gev( particle.momentum.pt() ) > 65:
-            if CalcEta(particle) > -2.5 and CalcEta(particle) < 2.5:
-                if abs( CalcD0(particle) ) > 3 and abs( CalcD0(particle) ) < 300 :
+            if calc_eta(particle) > -2.5 and calc_eta(particle) < 2.5:
+                if abs( calc_d0(particle) ) > 3 and abs( calc_d0(particle) ) < 300 :
                     return True
     return False
 
@@ -145,7 +155,7 @@ with hep.open(hepmc_file) as hf:
         for particle in event.particles:
             if passes_first_cuts(particle):
                 leptons.append(particle)
-        leptons.sort( key=lambda lepton: -lepton.momentum.pt() )
+        leptons.sort( key=lambda particle: -particle.momentum.pt() )
         acc = [] #Accepted leptons
         weights = []
         if len(leptons) >= 2:
@@ -153,14 +163,14 @@ with hep.open(hepmc_file) as hf:
             for i in range(n):
                 for j in range(n):
                     if j > i:
-                        check_R = process_pairs( leptons[i],leptons[j] )
-                        if check_R == True:
+                        check_r = delta_r_cut( leptons[i],leptons[j] )
+                        if check_r == True:
                             if leptons[i] not in acc:
                                 acc.append( leptons[i] )
                             if leptons[j] not in acc:
                                 acc.append( leptons[j] )
             for k in range( len(acc) ):
-                eff = eff_func( acc[k] )
+                eff = get_efficiency( acc[k] )
                 weights.append(eff)
             p_event = weight(weights)
             expected.Fill(0.5, p_event)

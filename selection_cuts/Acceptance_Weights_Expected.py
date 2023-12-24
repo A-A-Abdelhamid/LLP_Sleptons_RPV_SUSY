@@ -64,7 +64,6 @@ hist.GetYaxis().SetTitle("d0 (mm)")
 hist.SetTitle("Muon reconstruction efficiency")
 hist.Draw("COLZ")
 cH.Update()
-cH.SaveAs("effHisto.pdf")
 
 # pT conversion from MeV to GeV
 def mev_to_gev(mev):
