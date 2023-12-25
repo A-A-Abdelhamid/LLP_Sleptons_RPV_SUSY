@@ -15,7 +15,7 @@ import json
 from array import array
 
 # CHANGE ME :)
-hepmc_file = "../../run_data/run_15/Events/run_01/tag_1_pythia8_events.hepmc"
+hepmc_file = "../../run_data/run_17/Events/run_01/tag_1_pythia8_events.hepmc"
 
 # Read the JSON file
 file_path = "Eff.json"
@@ -98,7 +98,6 @@ def calc_d0(particle):
     
     return (xver* (py/pt)) - (yver* (px/pt))
 
-expected = ROOT.TH1F("Expected","Expected Number of Events",1,0,1)
 
 # Return the bin in which a value would be found
 # NOTE This functions properly when all bins are the same size
@@ -141,6 +140,7 @@ def delta_r_cut(particle1, particle2):
     else:
       return False 
 
+# TODO All constants should be variables.
 def passes_first_cuts(particle):
     if abs(particle.pid) == 13 and particle.status == 1:
         if  mev_to_gev( particle.momentum.pt() ) > 65:
@@ -148,6 +148,8 @@ def passes_first_cuts(particle):
                 if abs( calc_d0(particle) ) > 3 and abs( calc_d0(particle) ) < 300 :
                     return True
     return False
+
+results = []
 
 with hep.open(hepmc_file) as hf:
     for event in hf:
@@ -173,19 +175,7 @@ with hep.open(hepmc_file) as hf:
                 eff = get_efficiency( acc[k] )
                 weights.append(eff)
             p_event = weight(weights)
-            expected.Fill(0.5, p_event)
+            results.append(p_event)
 
-c = ROOT.TCanvas("canvas", "Expected", 800, 600)
-expected.Draw("COLZ")
-c.Update()
-c.SaveAs("expected_v2_small.pdf")
-area = ( expected.GetSumOfWeights() )
-
-print("Area under the histogram (number of surviving events):", area)
-bincontent = expected.GetBinContent(1)
-error = expected.GetBinError(1)
-print("Bin content:", bincontent, "+/-", error)
-sigma =  0.0005221 * 1000 # 0.5221 fb ### TODO What is this?
-L = 139 #1/fb ### TODO And this?
-n_gen = 20000 # # of generated events
-print("Expected events:", (area * sigma * L) / n_gen, "+/-",( (error * sigma * L) / n_gen), "events")
+print(results)
+np.save('cut_data.npy', results)
