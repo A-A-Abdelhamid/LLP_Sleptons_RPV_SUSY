@@ -1,21 +1,18 @@
-import matplotlib.pyplot as plt
 import numpy as np
 import pyhepmc as hep
-import pyhepmc.io as ihep
-import pyhepmc.view as vhep
-import uproot
-import ROOT
-from collections import Counter
-import math
 from ROOT import TLorentzVector
-from ROOT import TEfficiency, TFile, TH1F, TGraph2DErrors, gStyle, gROOT, TColor, TLatex
 from functools import reduce
 from operator import mul
 import json
-from array import array
 
 # CHANGE ME :)
 hepmc_file = "../../run_data/run_17/Events/run_01/tag_1_pythia8_events.hepmc"
+p_pid = 13 # PID of decay product
+min_GeV = 65 # minimum mass-energy of decay product
+min_eta = -2.5
+max_eta = 2.5
+min_d0 = 3 # in mm
+max_d0 = 300 # also in mm
 
 # Read the JSON file
 file_path = "Eff.json"
@@ -24,6 +21,7 @@ with open(file_path, 'r') as f:
     
 values_data = json_data.get('values', None)
 
+# Pull efficiencies per pT, d0 values
 pT_array = []
 d0_array = []
 efficiency_array = []
@@ -33,7 +31,7 @@ for value in values_data:
     d0_array.append( float( value['x'][1]['value'] ) )
     efficiency_array.append( [ float( value['x'][0]['value'] ), float( value['x'][1]['value'] ), float( value['y'][0]['value'] ) ] )
 
-# pT conversion from MeV to GeV
+# pT conversion from MeV to GeV (see README)
 def mev_to_gev(mev):
     return mev * 10**-3
 
@@ -140,12 +138,11 @@ def delta_r_cut(particle1, particle2):
     else:
       return False 
 
-# TODO All constants should be variables.
 def passes_first_cuts(particle):
-    if abs(particle.pid) == 13 and particle.status == 1:
-        if  mev_to_gev( particle.momentum.pt() ) > 65:
-            if calc_eta(particle) > -2.5 and calc_eta(particle) < 2.5:
-                if abs( calc_d0(particle) ) > 3 and abs( calc_d0(particle) ) < 300 :
+    if abs(particle.pid) == p_pid and particle.status == 1:
+        if  mev_to_gev( particle.momentum.pt() ) > min_GeV:
+            if calc_eta(particle) > min_eta and calc_eta(particle) < max_eta:
+                if abs( calc_d0(particle) ) > min_d0 and abs( calc_d0(particle) ) < max_d0:
                     return True
     return False
 
@@ -158,7 +155,7 @@ with hep.open(hepmc_file) as hf:
             if passes_first_cuts(particle):
                 leptons.append(particle)
         leptons.sort( key=lambda particle: -particle.momentum.pt() )
-        acc = [] #Accepted leptons
+        acc = [] # accepted leptons
         weights = []
         if len(leptons) >= 2:
             n = len(leptons)
@@ -177,5 +174,4 @@ with hep.open(hepmc_file) as hf:
             p_event = weight(weights)
             results.append(p_event)
 
-print(results)
 np.save('cut_data.npy', results)

@@ -1,16 +1,7 @@
-import matplotlib.pyplot as plt
 import numpy as np
-import pyhepmc as hep
-import pyhepmc.io as ihep
-import pyhepmc.view as vhep
 import uproot
 import ROOT
-from collections import Counter
-import math
-from ROOT import TLorentzVector
 from ROOT import TEfficiency, TFile, TH1F, TGraph2DErrors, gStyle, gROOT, TColor, TLatex
-from functools import reduce
-from operator import mul
 import json
 from array import array
 
@@ -31,7 +22,7 @@ ROOT.gStyle.SetNumberContours(255)
 hist = ROOT.TH2F("hist", "hist",10, 65, 765, 8, 0, 400)
 hist.SetStats(0)
 # Initialize the ROOT TArrays
-Pt = []
+pt = []
 d0 = []
 eff = []
 
@@ -43,14 +34,13 @@ with open(file_path, 'r') as f:
 values_data = json_data.get('values', None)
 
 for entry in values_data:
-    Pt.append( float( entry['x'][0]['value'] ) )
+    pt.append( float( entry['x'][0]['value'] ) )
     d0.append( float( entry['x'][1]['value'] ) )
     eff.append( float( entry['y'][0]['value'] ) )
 
 # Fill the histogram
-for i in range( len(Pt) ):
-    # Adding 1 to ensure we start from bin 1 ### TODO Is something missing here?
-    x_bin = hist.GetXaxis().FindBin( Pt[i] )
+for i in range( len(pt) ):
+    x_bin = hist.GetXaxis().FindBin( pt[i] )
     y_bin = hist.GetYaxis().FindBin( d0[i] )
     hist.SetBinContent( x_bin, y_bin, eff[i] )
 
@@ -61,4 +51,5 @@ hist.GetYaxis().SetTitle("d0 (mm)")
 hist.SetTitle("Muon reconstruction efficiency")
 hist.Draw("COLZ")
 cH.Update()
+cH.SaveAs("effHisto.pdf")
 

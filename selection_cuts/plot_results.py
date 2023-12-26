@@ -1,18 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import pyhepmc as hep
-import pyhepmc.io as ihep
-import pyhepmc.view as vhep
 import uproot
 import ROOT
-from collections import Counter
-import math
-from ROOT import TLorentzVector
 from ROOT import TEfficiency, TFile, TH1F, TGraph2DErrors, gStyle, gROOT, TColor, TLatex
-from functools import reduce
-from operator import mul
-import json
-from array import array
 
 numpy_file = "cut_data.npy"
 data = np.load(numpy_file)
