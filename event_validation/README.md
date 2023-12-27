@@ -1,5 +1,23 @@
 # Code and plots used in validating the events
 
+## Code
+
+### [save_diagrams.py](https://github.com/A-A-Abdelhamid/LLP_Sleptons_RPV_SUSY/blob/secondary/event_validation/save_diagrams.py)
+
+**Warning: This is a very resource-intensive script. It is recommended only for small data sets.**
+
+This pulls data from your .hepmc file to produce two high-quality vector diagrams (a .pdf and a .svg) for each event. Since runs with many events will result in a very large number of generated diagrams, the code creates and saves all of the files into a subdirectory in the directory in which the code is executed. Unless the string in Line 7 is altered, this subdirectory will be named "event_diagrams."
+
+Please note that Windows users will need to install the PyHepMC package using an alternative to pip. The pip installation method will result in 'unknown format' errors. 
+
+### [single_event_diagram.py]()
+
+If you need to take a closer look at only one of the events in your .hepmc data file, this script allows you to generate a pair of vector files (one .pdf and one .svg) by selecting an event number. To avoid confusion and promote greater potential usefulness, it will also print the following information to the command line:
+- The production vertex index number of a previously-specified particle within the event.
+- The event record number and the event index number.
+
+Diagrams created by this script will be named "event[specified number]" and saved in the directory in which the script is executed. 
+
 ## Plots
 
 ### All final status muons
