@@ -1,8 +1,0 @@
-import ./RPVMSSM_UFO/RPVMSSM_UFO
-define q = g u c d s u~ c~ d~ s~ b t b~ t~ h01 h2 h3 h+ h-
-define p = g u c d s u~ c~ d~ s~ b b~
-generate p p > mur- mur+ /q
-output auto
-shell cd auto/Cards
-  
- 

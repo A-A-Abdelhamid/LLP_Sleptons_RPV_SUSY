@@ -1,2 +1,0 @@
-shower=Pythia8
-analysis=OFF
