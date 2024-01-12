@@ -1,0 +1,1 @@
+These scripts were merged into the main script [SC_Weights_Expected.py](https://github.com/A-A-Abdelhamid/LLP_Sleptons_RPV_SUSY/blob/c6a58cb9e1be65d4572f5848cbe09856df38f1ca/Selection%20Cuts/SC_Weights_Expected.py) and are kept here for bookkeeping purposes only

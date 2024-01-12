@@ -57,13 +57,10 @@ for i in range(len(Pt)):
     hist.SetBinContent(x_bin, y_bin, eff[i])
 
 # Draw the histogram
-cH = ROOT.TCanvas("canvasH", "Pt-do eff", 800, 600)
-hist.GetXaxis().SetTitle("Pt (GeV)")
-hist.GetYaxis().SetTitle("d0 (mm)")
-hist.SetTitle("Muon reconstruction efficiency")
+c = ROOT.TCanvas("canvas", "Pt-do eff", 800, 600)
 hist.Draw("COLZ")
-cH.Update()
-cH.SaveAs("effHisto.pdf")
+c.Update()
+c.SaveAs("effHisto.pdf")
 
 
 
@@ -152,9 +149,9 @@ graph = directory.Get("Graph2D_y1")
 hist= graph.GetHistogram()
 """
 
-histo = ROOT.TH1F("weights","weights",100,0,1)
+histo = ROOT.TH1F("weights","weights",200,0,1)
 
-expected =ROOT.TH1F("Expected","Expected Number of Events",1,0,1)
+expected =ROOT.TH1F("Expected","Expected",1,0,1)
 
 def eff_func (lepton):
 
@@ -182,8 +179,39 @@ def process_pairs(lepton1,lepton2):
       return True
         
     else:
-      return False 
+      return False  # Exit the loop if delta_R < 0.2
 
+def triggered(event):
+    has_valid_electron = False
+    has_valid_muon = False
+    electron_count = 0
+    lepton_eta_count = 0  # Count of leptons with eta < 2.5
+
+    for particle in event.particles:
+        if particle.status != 1:  # Consider only final state particles
+          continue
+
+        eta = CalcEta(particle)
+        if abs(particle.pid) == 11:  # Electron
+            if particle.momentum.pt() > 160:
+                has_valid_electron = True
+            elif particle.momentum.pt() > 60:
+                electron_count += 1
+
+        elif abs(particle.pid) == 13:  # Muon
+            if particle.momentum.pt() > 60 and abs(eta) < 1.05:
+                has_valid_muon = True
+
+        if abs(particle.pid) in [11, 13] and abs(eta) < 2.5:
+            lepton_eta_count += 1
+
+    # Check if the event satisfies the original conditions
+    if has_valid_electron or electron_count >= 2 or has_valid_muon:
+        # If original conditions are met, check for the additional eta condition
+        if lepton_eta_count >= 2:
+            return True
+
+    return False
     
   
 hepmc_file = "tag_1_pythia8_events.hepmc"
@@ -192,39 +220,43 @@ hepmc_file = "tag_1_pythia8_events.hepmc"
 #hist =  ROOT.TH2F("hist", "hist" ,10, 65, 765, 8, 0, 400)
 count=0
 weight_sum=0
+nottriggered=0
 with hep.open(hepmc_file) as f:
     # Loop over events in the file
     
     for event in f:
+      trigger= False
       particles=[]
       leptons=[]
       signal_leptons=[]
       pt_sub=0
       pt_leading=0
       list=[]
+      passtrigger=[]
+      
+      cond=triggered(event)
+      if cond == False:
+        nottriggered = nottriggered +1
+        continue
+        
       for particle in event.particles:
         
-        #if particle.status == 1:
-         # particles.append(particle)
-          
+        
+        
         if abs(particle.pid) == 13 and particle.status == 1 and particle.momentum.pt()> 65 and CalcEta(particle)> -2.5 and CalcEta(particle) < 2.5 and abs(CalcD0(particle))>3 and abs(CalcD0(particle)) <300 :
         
           leptons.append(particle)
       
-          
       leptons.sort(key=lambda lepton: -lepton.momentum.pt())
 
-        # Select the top two leptons (if there are at least two)
-      #if len(leptons) >= 2:
-      
       pt=[]
       eta=[]
       phi=[]
       mass=[]
-      acc=[] #Accepted leptons
+      acc=[]
       weights= []
+
       if len(leptons) >= 2:
-      
         n = len(leptons)
         for i in range(n):
           for j in range(n):
@@ -241,27 +273,24 @@ with hep.open(hepmc_file) as f:
                   
         for k in range(len(acc)):
           eff= eff_func(acc[k])
-         
+          #print("pt: ", acc[k].momentum.pt()," ", CalcD0(acc[k]) , " ","eff: ", eff)
           weights.append(eff)
-
+        #print(acc)
+        #print("weights: ", weights)
           
-        
+      
         p_event= weight(weights)
-        #if p_event != 0:
-        histo.Fill(p_event)
+        if p_event != 0:
+          histo.Fill(p_event)
           
         expected.Fill(0.5,p_event)
-        
-    
-        
-       
+        #print("weight: ", p_event)
         weight_sum= weight_sum + p_event
-        
-        
-       
-        
+        #print("sum: ", weight_sum)
         if p_event > 0 :
           count=count+1
+          #print((weight_sum))
+          #histo.Fill(0,p_event)
         #print("count: ", count)
         
 
@@ -271,6 +300,7 @@ c.Update()
 c.SaveAs("expected.pdf")
 area = (expected.GetSumOfWeights())
 
+
 print(f"Area under the histogram (number of surviving events): ", area)
 bincontent =expected.GetBinContent(1)
 error= expected.GetBinError(1)
@@ -279,8 +309,62 @@ sigma=  0.0005221 * 1000 # 0.5221 fp
 L = 139 #1/fb
 n_gen=20000 # # of generated events
 print("Expected events: ", (area*sigma*L)/n_gen, "  +/- ",((error*sigma*L)/n_gen), " events")
+triggered_events= 20000- nottriggered
+print ("triggered events =  ", triggered_events)
+print ("ratio of triggered to total events =  ", triggered_events/20000)
+print ("in paper it was= ", 66.3/93.6)
 
-chi = ROOT.TCanvas("canvaschi", "weights", 800, 600)
-histo.Draw()
-chi.Update()
-chi.SaveAs("weights_dist.pdf")
+total_histogram = TH1F()
+passed_histogram = TH1F()
+
+# Fill the histograms with total events and triggered events
+total_events = 20000  # Total number of events (denominator)
+passed_events = triggered_events    # Number of passed events (numerator)
+
+total_histogram.SetBinContent(1, total_events)
+    
+
+passed_histogram.SetBinContent(1, passed_events)
+   
+
+# Set uncertainties for total and passed events
+etot= math.sqrt(total_events)
+epass= math.sqrt(passed_events)
+
+total_histogram.SetBinError(1, etot)
+passed_histogram.SetBinError(1, epass)
+
+eff = TEfficiency(passed_histogram, total_histogram)
+
+print("Ratio of triggered is ", eff.GetEfficiency(1))
+print("Error_Low: ",eff.GetEfficiencyErrorLow(1))
+print("Error_high: ", eff.GetEfficiencyErrorUp(1))
+
+total_histogram_p = TH1F()
+passed_histogram_p = TH1F()
+
+# Fill the histograms with total events and passed events
+total_events_p = 93.6  # Total number of events (denominator)
+passed_events_p = 66.3     # Number of triggered events (numerator)
+
+total_histogram_p.SetBinContent(1, total_events_p)
+    
+
+passed_histogram_p.SetBinContent(1, passed_events_p)
+   
+
+# Set uncertainties for total and passed events
+etot_p= math.sqrt(total_events_p)
+epass_p= math.sqrt(passed_events_p)
+
+total_histogram_p.SetBinError(1, etot_p)
+passed_histogram_p.SetBinError(1, epass_p)
+
+eff_p = TEfficiency(passed_histogram_p, total_histogram_p)
+
+print("paper ratio of triggered is ", eff_p.GetEfficiency(1))
+print("Error_Low: ",eff_p.GetEfficiencyErrorLow(1))
+print("Error_high: ", eff_p.GetEfficiencyErrorUp(1))
+
+#print (eff.GetEfficiency(1) - eff.GetEfficiencyErrorLow(1))
+#print (eff_p.GetEfficiency(1)+eff_p.GetEfficiencyErrorUp(1))
