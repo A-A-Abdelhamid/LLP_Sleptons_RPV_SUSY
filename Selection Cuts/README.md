@@ -1,4 +1,4 @@
-Put your HEPMC file in the same directory as [Acceptance_Weights_Expected.py](https://github.com/A-A-Abdelhamid/LLP_Sleptons_RPV_SUSY/blob/main/Selection%20Cuts/Acceptance_Weights_Expected.py) and the [JSON efficiency file](https://github.com/A-A-Abdelhamid/LLP_Sleptons_RPV_SUSY/blob/main/Selection%20Cuts/Eff.json)
+Put your HEPMC file in the same directory as [SC_Weights_Expected.py](https://github.com/A-A-Abdelhamid/LLP_Sleptons_RPV_SUSY/blob/main/Selection%20Cuts/SC_Weights_Expected.py) and the [JSON efficiency file](https://github.com/A-A-Abdelhamid/LLP_Sleptons_RPV_SUSY/blob/main/Selection%20Cuts/Eff.json)
 
 When you run the python script, this is the output for the 400 GeV 0.1 ns right-handed smuons (with generated number of events = 20,000) with only one decay mode : mur > mu ~ve:
 
