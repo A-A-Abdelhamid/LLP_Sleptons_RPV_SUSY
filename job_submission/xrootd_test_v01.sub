@@ -1,0 +1,8 @@
+executable = root://eosuser.cern.ch//eos/home-j/jashley/tutorials_and_tests/condor_tutorial/script.sh
+
+arguments = $(ClusterId)$(ProcId)
+output = root://eosuser.cern.ch//eos/home-j/jashley/tutorials_and_tests/condor_tutorial/output/xrootd_02.$(ClusterId).$(ProcId).out
+error = error/xrootd_02.$(ClusterId).$(ProcId).err
+log = log/xrootd_02.$(ClusterId).log
+
+queue
