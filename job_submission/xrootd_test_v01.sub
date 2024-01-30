@@ -1,4 +1,4 @@
-executable = root://eosuser.cern.ch//eos/user/j/jashley/tutorials_and_tests/condor_tutorial/script.sh
+executable = script.sh
 
 arguments = $(ClusterId)$(ProcId)
 output = xrootd_02.$(ClusterId).$(ProcId).out
