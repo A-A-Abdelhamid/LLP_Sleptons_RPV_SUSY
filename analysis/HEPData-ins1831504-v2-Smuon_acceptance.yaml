@@ -1,0 +1,130 @@
+dependent_variables:
+- header:
+    name: Acceptance
+  values:
+  - value: 0.00045521
+  - value: 0.0096213
+  - value: 0.021459
+  - value: 0.0040494
+  - value: 0.0019167
+  - value: 0.079168
+  - value: 0.15429
+  - value: 0.056003
+  - value: 0.0081786
+  - value: 0.21481
+  - value: 0.40487
+  - value: 0.19791
+  - value: 0.012846
+  - value: 0.30687
+  - value: 0.58154
+  - value: 0.30356
+  - value: 0.014215
+  - value: 0.35973
+  - value: 0.68152
+  - value: 0.37971
+  - value: 0.016589
+  - value: 0.3863
+  - value: 0.72336
+  - value: 0.44111
+  - value: 0.01823
+  - value: 0.40396
+  - value: 0.76153
+  - value: 0.48378
+  - value: 0.01398
+  - value: 0.40485
+  - value: 0.77837
+  - value: 0.50848
+  - value: 0.016571
+  - value: 0.40935
+  - value: 0.78816
+  - value: 0.54796
+  - value: 0.013474
+  - value: 0.4057
+  - value: 0.79413
+independent_variables:
+- header:
+    name: Mass
+    units: GeV
+  values:
+  - value: 75.0
+  - value: 75.0
+  - value: 75.0
+  - value: 75.0
+  - value: 125.0
+  - value: 125.0
+  - value: 125.0
+  - value: 125.0
+  - value: 225.0
+  - value: 225.0
+  - value: 225.0
+  - value: 225.0
+  - value: 325.0
+  - value: 325.0
+  - value: 325.0
+  - value: 325.0
+  - value: 425.0
+  - value: 425.0
+  - value: 425.0
+  - value: 425.0
+  - value: 525.0
+  - value: 525.0
+  - value: 525.0
+  - value: 525.0
+  - value: 625.0
+  - value: 625.0
+  - value: 625.0
+  - value: 625.0
+  - value: 725.0
+  - value: 725.0
+  - value: 725.0
+  - value: 725.0
+  - value: 825.0
+  - value: 825.0
+  - value: 825.0
+  - value: 825.0
+  - value: 925.0
+  - value: 925.0
+  - value: 925.0
+- header:
+    name: Lifetime
+    units: log10(ns)
+  values:
+  - value: -1.5
+  - value: -0.5
+  - value: 0.5
+  - value: 1.5
+  - value: -1.5
+  - value: -0.5
+  - value: 0.5
+  - value: 1.5
+  - value: -1.5
+  - value: -0.5
+  - value: 0.5
+  - value: 1.5
+  - value: -1.5
+  - value: -0.5
+  - value: 0.5
+  - value: 1.5
+  - value: -1.5
+  - value: -0.5
+  - value: 0.5
+  - value: 1.5
+  - value: -1.5
+  - value: -0.5
+  - value: 0.5
+  - value: 1.5
+  - value: -1.5
+  - value: -0.5
+  - value: 0.5
+  - value: 1.5
+  - value: -1.5
+  - value: -0.5
+  - value: 0.5
+  - value: 1.5
+  - value: -1.5
+  - value: -0.5
+  - value: 0.5
+  - value: 1.5
+  - value: -1.5
+  - value: -0.5
+  - value: 0.5
