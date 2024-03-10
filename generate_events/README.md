@@ -4,9 +4,9 @@ Until Issues [28](https://github.com/A-A-Abdelhamid/LLP_Sleptons_RPV_SUSY/issues
 
 Data sets used for testing other parts of this project were generated using the following process:
 
-1. Follow instructions outlined [here](https://github.com/lawrenceleejr/DVMuReint#docker) to install Docker, pull the appropriate image, and importing the required lhapdf sets.
+1. Follow instructions outlined [here](https://github.com/lawrenceleejr/DVMuReint#docker) to install Docker, pull the appropriate image, and import the required lhapdf sets.
 
-2. Clone or download the [UFO model directory](https://github.com/lawrenceleejr/DVMuReint/tree/main/RPVMSSM_UFO)
+2. Clone or download the [UFO model directory](https://github.com/lawrenceleejr/DVMuReint/tree/main/RPVMSSM_UFO).
 
 3. From a directory that contains the UFO model, run the Docker image.
 
@@ -30,7 +30,9 @@ The process card does the following:
 
 `define p = g u c d s u~ c~ d~ s~ b b~`
 
-4. Generates `generate p p > mur- mur+ /q`
+4. Generates process
+
+`generate p p > mur- mur+ /q`
 
 5. Outputs preliminary files to a subdirectory automatically created in the location from which you ran MadGraph.
 
@@ -47,6 +49,7 @@ The process card does the following:
 8. Changes the masses for both left- and right-handed smuons to 400 GeV. Both are necessary, as MadGraph expects them to match and will throw a fit if they don't.
 
 `set mass 1000013 4.000000e+02`
+
 `set mass 2000013 4.000000e+02`
 
 9. Changes the decay width for right-handed smuons.
