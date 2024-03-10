@@ -1,5 +1,6 @@
 Until Issues [28](https://github.com/A-A-Abdelhamid/LLP_Sleptons_RPV_SUSY/issues/28) and [30](https://github.com/A-A-Abdelhamid/LLP_Sleptons_RPV_SUSY/issues/30) are resolved, this folder will likely continue to be a mess.
-#Initial Process for Generating Smuons with Mass = 400 GeV and Lifetime = 0.1 ns
+
+# Initial Process for Generating Smuons with Mass = 400 GeV and Lifetime = 0.1 ns
 
 Data sets used for testing other parts of this project were generated using the following process:
 
