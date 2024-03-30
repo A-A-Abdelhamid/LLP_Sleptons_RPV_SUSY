@@ -35,4 +35,4 @@ PartonShowers:model = 1    ! 1:old showers, 2:vincia, 3:dire
 
 ! 5) Input/output methods, user added
 Beams:frameType = 4
-Beams:LHEF = "unweighted_events.lhe"
+Beams:LHEF = "ttbar.lhe"
