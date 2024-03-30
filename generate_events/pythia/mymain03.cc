@@ -15,7 +15,8 @@
 // Therefore large event samples may be impractical.
 
 #include "Pythia8/Pythia.h"
-#include "Pythia8Plugins/HepMC2.h"
+#include "Pythia8Plugins/HepMC3.h"
+#include "/cvmfs/sft.cern.ch/lcg/views/LCG_105/x86_64-el9-gcc13-opt/include/HepMC3/Print.h"
 
 using namespace Pythia8;
 
@@ -43,10 +44,10 @@ int main(int argc, char* argv[]) {
        << argv[2] << " <<< \n" << endl;
 
   // Interface for conversion from Pythia8::Event to HepMC event.
-  HepMC::Pythia8ToHepMC ToHepMC;
+  HepMC3::Pythia8ToHepMC3 ToHepMC;
 
   // Specify file where HepMC events will be stored.
-  HepMC::IO_GenEvent ascii_io(argv[2], std::ios::out);
+  HepMC3::WriterAscii ascii_io(argv[2], std::ios::out);
 
   // Generator.
   Pythia pythia;
@@ -83,7 +84,7 @@ int main(int argc, char* argv[]) {
     // Construct new empty HepMC event and fill it.
     // Units will be as chosen for HepMC build, but can be changed
     // by arguments, e.g. GenEvt( HepMC::Units::GEV, HepMC::Units::MM)
-    HepMC::GenEvent* hepmcevt = new HepMC::GenEvent();
+    HepMC3::GenEvent* hepmcevt = new HepMC3::GenEvent();
     ToHepMC.fill_next_event( pythia, hepmcevt );
 
     // Write the HepMC event to file. Done with it.

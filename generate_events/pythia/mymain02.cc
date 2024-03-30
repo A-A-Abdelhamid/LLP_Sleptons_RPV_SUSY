@@ -7,6 +7,10 @@
  *
  **/
 
+#include "HepMC3/GenEvent.h"
+#include "HepMC3/WriterAscii.h"
+#include "HepMC3/Print.h"
+
 #include "Pythia8/Pythia.h"
 #include "Pythia8Plugins/HepMC3.h"
 
@@ -47,7 +51,12 @@ int main(int argc, char **argv) {
 
         pythiaToHepMC.fill_next_event(pythia.event, &hepmc, -1, &pythia.info);
 
-        file.write_event(hepmc);
+        if( i == 0 ) {
+		std::cout << "First event: " << std::endl;
+		Print::listing(hepmc);
+	}
+
+	file.write_event(hepmc);
     }
 
     file.close();
