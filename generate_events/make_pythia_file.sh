@@ -1,13 +1,14 @@
 #!/bin/bash
-cd /cvmfs/sft.cern.ch/lcg/releases/MCGenerators/pythia8/310-2f242/x86_64-el9-gcc13-opt/share/Pythia8/examples/
-/cvmfs/sft.cern.ch/lcg/releases/gcc/13.1.0-b3d18/x86_64-el9/bin/g++ \
+cd $PYTHIA8/share/Pythia8/examples/
+$CXX \
 	/eos/home-j/jashley/LLP_Sleptons_RPV_SUSY/generate_events/main42.cc \
 	-o /eos/home-j/jashley/LLP_Sleptons_RPV_SUSY/generate_events/main42 \
-	-I /cvmfs/sft.cern.ch/lcg/releases/MCGenerators/pythia8/310-2f242/x86_64-el9-gcc13-opt/include \
+	-I $PYTHIA8/include \
 	-O2 -std=c++11 -pedantic -W -Wall -Wshadow -fPIC -pthread -DGZIP -lz \
-	-L/cvmfs/sft.cern.ch/lcg/releases/MCGenerators/pythia8/310-2f242/x86_64-el9-gcc13-opt/lib \
-	-Wl,-rpath,/cvmfs/sft.cern.ch/lcg/releases/MCGenerators/pythia8/310-2f242/x86_64-el9-gcc13-opt/lib\
-	-lpythia8 -ldl \
-	-Wl,-rpath,/cvmfs/sft.cern.ch/lcg/views/LCG_105/x86_64-el9-gcc13-opt/lib \
-	-llibHepMC
+	-l/cvmfs/sft.cern.ch/lcg/releases/HepMC/2.06.11-d5a39/x86_64-centos9-gcc11-opt/include \
+	-L/cvmfs/sft.cern.ch/lcg/releases/HepMC/2.06.11-d5a39/x86_64-centos9-gcc11-opt/lib 
+	-Wl,-rpath,/cvmfs/sft.cern.ch/lcg/releases/HepMC/2.06.11-d5a39/x86_64-centos9-gcc11-opt/lib -llibHepMC
+#	-L$PYTHIA8/lib \
+#	-Wl,-rpath,$PYTHIA8/lib\
+#	-lpythia8 -ldl 
 cd -
