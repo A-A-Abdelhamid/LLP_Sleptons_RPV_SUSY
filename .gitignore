@@ -1,3 +1,3 @@
 .DS_Store
 py.py
-PROC_RPVMSSM_UFO_*/**
+generate_events/PROC_RPVMSSM_UFO_*/**
