@@ -1,5 +1,5 @@
 #!/bin/bash
-# To use, replace the file names at the end of lines 5 and 6 with your file name.
+# To use, replace the file names at the end of lines 8 and 10 with your file name.
 # If compiling a script for HepMC output, uncomment the last 5 lines.
 
 # Run compiler
