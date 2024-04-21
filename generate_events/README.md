@@ -1,5 +1,29 @@
 Until Issues [28](https://github.com/A-A-Abdelhamid/LLP_Sleptons_RPV_SUSY/issues/28) and [30](https://github.com/A-A-Abdelhamid/LLP_Sleptons_RPV_SUSY/issues/30) are resolved, this folder will likely continue to be a mess.
 
+# Generation via MadGraph and Pythia using LCG
+
+This process is still in its alpha testing stage. Currently, the process is as follows.
+
+1. Connect to LXPlus.
+
+2. Source the LCG view 102b_ATLAS_6.
+
+`source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_ATLAS_6/x86_64-centos9-gcc11-opt/setup.sh`
+
+3. Run MadGraph, using [proc_card.dat](https://github.com/A-A-Abdelhamid/LLP_Sleptons_RPV_SUSY/blob/secondary/generate_events/proc_card.dat) as input.
+
+`mg5_aMC proc_card.dat` 
+
+4. Compile (script I haven't written yet, see note below) with [make_pythia_script.sh](https://github.com/A-A-Abdelhamid/LLP_Sleptons_RPV_SUSY/blob/secondary/generate_events/make_pythia_script.sh).
+
+5. Run (script I haven't written yet).
+
+`./script_name > process_mass_lifetime.hepmc`
+
+## Note
+
+As of writing this, the next thing on my to-do is to write a script combining the functionalities of the [main38](https://pythia.org/latest-manual/examples/main38.html) and [main42](https://pythia.org/latest-manual/examples/main43.html) Pythia example files. This *should* be fairly straight-forward, but that was also true for every other step in this generation process so far. :sparkles:
+
 # Initial Process for Generating Smuons with Mass = 400 GeV and Lifetime = 0.1 ns
 
 Data sets used for testing other parts of this project were generated using the following process:
