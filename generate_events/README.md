@@ -1,8 +1,6 @@
-Until Issues [28](https://github.com/A-A-Abdelhamid/LLP_Sleptons_RPV_SUSY/issues/28) and [30](https://github.com/A-A-Abdelhamid/LLP_Sleptons_RPV_SUSY/issues/30) are resolved, this folder will likely continue to be a mess.
-
 # Generation via MadGraph and Pythia using LCG
 
-This process is still in its alpha testing stage. Currently, the process is as follows.
+This process is still in its alpha testing stage.
 
 ## Set Up
 
@@ -26,7 +24,11 @@ If you ended your terminal session between setting up and beginning generation, 
 
 `mg5_aMC proc_card.dat` 
 
-5. Run [main42.cc](https://github.com/A-A-Abdelhamid/LLP_Sleptons_RPV_SUSY/blob/secondary/generate_events/main42.cc), using [main42.cmnd](https://github.com/A-A-Abdelhamid/LLP_Sleptons_RPV_SUSY/blob/secondary/generate_events/main42.cmnd) as input. In the snippet below, the output data will be written to out.hepmc and the log file will be written to out.log.
+5. Unzip the .lhe file produced by MadGraph.
+
+`gunzip $PWD/PROC_RPVMSSM_UFO_0/Events/run_01/unweighted_events.lhe.gz`
+
+6. Run [main42](https://github.com/A-A-Abdelhamid/LLP_Sleptons_RPV_SUSY/blob/secondary/generate_events/main42.cc), using [main42.cmnd](https://github.com/A-A-Abdelhamid/LLP_Sleptons_RPV_SUSY/blob/secondary/generate_events/main42.cmnd) as input. In the snippet below, the output data will be written to out.hepmc and the log file will be written to out.log.
 
 `./main42 main42.cmnd out.hepmc > out.log`
 
