@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # CHANGE ME :)
-hepmc_file = "../../run_data/run_17/Events/run_01/tag_1_pythia8_events.hepmc"
+hepmc_file = "/eos/home-j/jashley/LLP_Sleptons_RPV_SUSY/generate_events/out.hepmc"
 signal_pid = 13                    # signal particle id
 signal_particle = 'muon'           # signal particle name (for labeling)
 signal_parent = 2000013            # id of parent of signal particle

@@ -4,7 +4,7 @@ import uproot
 import ROOT
 from ROOT import TEfficiency, TFile, TH1F, TGraph2DErrors, gStyle, gROOT, TColor, TLatex
 
-numpy_file = "cut_data.npy"
+numpy_file = "/eos/home-j/jashley/LLP_Sleptons_RPV_SUSY/selection_cuts/cut_data.npy"
 data = np.load(numpy_file)
 
 expected = ROOT.TH1F("Expected","Expected Number of Events",1,0,1)

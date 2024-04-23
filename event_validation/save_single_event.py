@@ -1,9 +1,9 @@
 import pyhepmc
 from pyhepmc.view import savefig
 
-filename = "../../run_data/run_17/Events/run_01/tag_1_pythia8_events.hepmc"
+filename = "/eos/home-j/jashley/LLP_Sleptons_RPV_SUSY/generate_events/out.hepmc"
 
-event_num = 868 # Event number to plot
+event_num = 1 # Event number to plot
 p_id = 1399 # Particle index number in record
 p_pid = -211 # PDG ID of particle
 
