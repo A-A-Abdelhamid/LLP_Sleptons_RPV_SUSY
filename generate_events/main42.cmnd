@@ -27,7 +27,7 @@ Beams:eCM = 14000.                 ! CM energy of collision
 
 ! 4) PDF settings. Default is to use internal PDFs
 ! some pdf sets examples: cteq61.LHpdf cteq61.LHgrid MRST2004nlo.LHgrid
-#PDF:pSet = LHAPDF5:MRST2001lo.LHgrid
+PDF:pSet = LHAPDF6:NNPDF23_lo_as_0130_qed
 ! Allow extrapolation of PDF's beyond x and Q2 boundaries, at own risk.
 ! Default behaviour is to freeze PDF's at boundaries.
 #PDF:extrapolate = on
