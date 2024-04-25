@@ -1,0 +1,173 @@
+#
+#*************************
+#      Decay widths      *
+#*************************
+#
+#      PDG        Width
+DECAY  1   0.000000e+00
+#
+#      PDG        Width
+DECAY  2   0.000000e+00
+#
+#      PDG        Width
+DECAY  3   0.000000e+00
+#
+#      PDG        Width
+DECAY  4   0.000000e+00
+#
+#      PDG        Width
+DECAY  5   0.000000e+00
+#
+#      PDG        Width
+DECAY  6   1.557654e+00
+#  BR             NDA  ID1    ID2   ...
+   1.000000e+00   2    24  5 # 1.5576544861844825
+#
+#      PDG        Width
+DECAY  11   0.000000e+00
+#
+#      PDG        Width
+DECAY  12   0.000000e+00
+#
+#      PDG        Width
+DECAY  13   0.000000e+00
+#
+#      PDG        Width
+DECAY  14   0.000000e+00
+#
+#      PDG        Width
+DECAY  15   0.000000e+00
+#
+#      PDG        Width
+DECAY  16   0.000000e+00
+#
+#      PDG        Width
+DECAY  21   0.000000e+00
+#
+#      PDG        Width
+DECAY  22   0.000000e+00
+#
+#      PDG        Width
+DECAY  23   2.411784e+00
+#  BR             NDA  ID1    ID2   ...
+   1.520777e-01   2    3  -3 # 0.3667785629025113
+   1.520777e-01   2    1  -1 # 0.3667785629025113
+   1.503003e-01   2    5  -5 # 0.36249195291486846
+   1.178357e-01   2    4  -4 # 0.2841943939698832
+   1.178357e-01   2    2  -2 # 0.2841943939698832
+   6.877950e-02   2    16  -16 # 0.16588132792795596
+   6.877950e-02   2    14  -14 # 0.16588132792795596
+   6.877950e-02   2    12  -12 # 0.16588132792795596
+   3.453756e-02   2    13  -13 # 0.083297158995328
+   3.453756e-02   2    11  -11 # 0.083297158995328
+   3.445924e-02   2    15  -15 # 0.08310824777492506
+#
+#      PDG        Width
+DECAY  24   2.003129e+00
+#  BR             NDA  ID1    ID2   ...
+   3.333609e-01   2    4  -3 # 0.6677649616733605
+   3.333609e-01   2    2  -1 # 0.6677649616733605
+   1.111203e-01   2    14  -13 # 0.2225883205577868
+   1.111203e-01   2    12  -11 # 0.2225883205577868
+   1.110377e-01   2    16  -15 # 0.22242287810313752
+#
+#      PDG        Width
+DECAY  25   1.986108e-03
+#
+#      PDG        Width
+DECAY  35   5.748014e-01
+#
+#      PDG        Width
+DECAY  36   6.321785e-01
+#
+#      PDG        Width
+DECAY  37   5.469628e-01
+#
+#      PDG        Width
+DECAY  1000001   5.312788e+00
+#
+#      PDG        Width
+DECAY  1000002   5.477195e+00
+#
+#      PDG        Width
+DECAY  1000003   5.312788e+00
+#
+#      PDG        Width
+DECAY  1000004   5.477195e+00
+#
+#      PDG        Width
+DECAY  1000005   3.736276e+00
+#
+#      PDG        Width
+DECAY  1000006   2.021596e+00
+#
+#      PDG        Width
+DECAY  1000011   2.136822e-01
+#
+#      PDG        Width
+DECAY  1000012   1.498816e-01
+#
+#      PDG        Width           #only mur > mu ~ve       
+DECAY  1000013   6.500000e-15
+#  BR             NDA  ID1    ID2   ...
+   1               2    13  -12 # 0.3183098861837907
+#
+#      PDG        Width
+DECAY  1000014   1.498816e-01
+#
+#      PDG        Width
+DECAY  1000015   1.483273e-01
+#
+#      PDG        Width
+DECAY  1000016   1.475190e-01
+#
+#      PDG        Width
+DECAY  1000021   5.506754e+00
+#
+#      PDG        Width
+DECAY  1000022   2.777005e-03
+#
+#      PDG        Width
+DECAY  1000023   2.077700e-02
+#
+#      PDG        Width
+DECAY  1000024   1.704145e-02
+#
+#      PDG        Width
+DECAY  1000025   1.915985e+00
+#
+#      PDG        Width
+DECAY  1000035   2.585851e+00
+#
+#      PDG        Width
+DECAY  1000037   2.486895e+00
+#
+#      PDG        Width
+DECAY  2000001   2.858123e-01
+#
+#      PDG        Width
+DECAY  2000002   1.152973e+00
+#
+#      PDG        Width
+DECAY  2000003   2.858123e-01
+#
+#      PDG        Width
+DECAY  2000004   1.152973e+00
+#
+#      PDG        Width
+DECAY  2000005   8.015663e-01
+#
+#      PDG        Width
+DECAY  2000006   7.373133e+00
+#
+#      PDG        Width
+DECAY  2000011   2.161216e-01
+#
+#      PDG        Width        ## only mur > mu ve
+DECAY  2000013   6.500000e-15
+#  BR             NDA  ID1    ID2   ...
+   1               2    13  12 # 0.11467336466691391
+#
+#      PDG        Width
+DECAY  2000015   2.699061e-01
+
