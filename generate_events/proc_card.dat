@@ -3,11 +3,10 @@ define q = g u c d s u~ c~ d~ s~ b t b~ t~ h01 h2 h3 h+ h-
 define p = g u c d s u~ c~ d~ s~ b b~
 generate p p > mur- mur+ /q
 output auto
-shell cat $PWD/decay_table.dat >> $PWD/PROC_RPVMSSM_UFO_0/Cards/param_card_default.dat
 launch
 set mass 1000013 4.000000e+02
 set mass 2000013 4.000000e+02
-set decay 2000013 6.500000e-15
+set decay 2000013 6.500000e-15\1 2 13 -12
 set nevents 20000
 set time_of_flight 0.0
 set small_width_treatment 1e-30
