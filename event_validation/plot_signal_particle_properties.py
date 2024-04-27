@@ -48,8 +48,8 @@ with pyhepmc.open(hepmc_file) as f:
             # Check if the particle is produced by a decaying 2000013 or -2000013
             if has_signal_parent(particle):
             # Get the final descendant of the signal particle
-                signal_particle = get_signal(particle)
-                if signal_particle is not None:
+                particle_value = get_signal(particle)
+                if particle_value is not None:
                     if particle.pid == signal_pid:
                         num_particles += 1
                         p_pt = mev_to_gev( particle.momentum.pt() )

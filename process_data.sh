@@ -1,3 +1,6 @@
 #!/bin/bash
-python3 $PWD/selection_cuts/apply_cuts.py
-python3 $PWD/analysis/plot_results.py
+cd $PWD/selection_cuts/
+python3 apply_cuts.py
+cd ../analysis/
+python3 plot_results.py
+cd ..
