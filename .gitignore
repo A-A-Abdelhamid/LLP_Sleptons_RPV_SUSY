@@ -1,3 +1,4 @@
 .DS_Store
 py.py
 generate_events/PROC_RPVMSSM_UFO_*/**
+clean.sh
