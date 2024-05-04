@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # CHANGE ME :)
-hepmc_file = "/eos/home-j/jashley/LLP_Sleptons_RPV_SUSY/generate_events/out.hepmc"
+hepmc_file = "/eos/home-j/jashley/LLP_Sleptons_RPV_SUSY/generate_events/PROC_RPVMSSM_UFO_0/Events/smu300gev1ns/out.hepmc"
 signal_pid = 13                    # signal particle id
 signal_particle = 'muon'           # signal particle name (for labeling)
 signal_parent = 2000013            # id of parent of signal particle
