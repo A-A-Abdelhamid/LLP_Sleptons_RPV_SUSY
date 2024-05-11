@@ -7,7 +7,7 @@ import json
 
 # CHANGE ME :)
 #hepmc_file = "../../run_data/run_17/Events/run_01/tag_1_pythia8_events.hepmc"
-hepmc_file = "/eos/home-j/jashley/LLP_Sleptons_RPV_SUSY/generate_events/out.hepmc"
+hepmc_file = "/eos/home-j/jashley/LLP_Sleptons_RPV_SUSY/generate_events/PROC_RPVMSSM_UFO_0/Events/smu400gev1ns/out.hepmc"
 p_pid = 13 # PID of decay product
 min_GeV = 65 # minimum mass-energy of decay product
 min_eta = -2.5

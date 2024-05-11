@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # --- Header --- #
-nevents=3
+nevents=20000
 model_repo='https://github.com/lawrenceleejr/DVMuReint.git'
 model_dir="$PWD/DVMuReint/RPVMSSM_UFO/RPVMSSM_UFO/"
 
