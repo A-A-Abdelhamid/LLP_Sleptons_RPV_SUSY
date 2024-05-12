@@ -1,6 +1,6 @@
 # Generation via MadGraph and Pythia using LCG
 
-This process is currently under parallel development in the [secondary branch of the LLP_Sleptons_RPV_SUSY repo](https://github.com/A-A-Abdelhamid/LLP_Sleptons_RPV_SUSY/blob/secondary/) and is still in its alpha testing stage.
+This process is currently under parallel development in the [LCG-GenerationDuctTape repo](https://github.com/j-s-ashley/LCG-GenerationDuctTape) and is still in its alpha testing stage.
 
 ## Instantiation
 
