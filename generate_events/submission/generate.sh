@@ -61,7 +61,7 @@ echo set time_of_flight 0.0 >> $proc_card_name
 echo set small_width_treatment 1e-30 >> $proc_card_name
 echo set mass 1000013 $mass >> $proc_card_name
 echo set mass 2000013 $mass >> $proc_card_name
-echo set decay 2000013 6.500000e-15 >> $proc_card_name
+echo set decay 2000013 $decay >> $proc_card_name
 echo done >> $proc_card_name
 # --- End of Process Card Creation --- #
 
