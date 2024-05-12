@@ -2,3 +2,4 @@
 py.py
 generate_events/PROC_RPVMSSM_UFO_*/**
 clean.sh
+generate_events/data/
