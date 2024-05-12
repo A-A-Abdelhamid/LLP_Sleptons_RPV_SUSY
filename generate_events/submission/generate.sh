@@ -15,7 +15,7 @@ decay="$( awk 'BEGIN {print ($hbar / $lifetime) }')"
 run_dir='smu'$mass'gev_'$lifetime'ns'
 
 proc_card_name='auto_proc_card.dat'
-output_dir='/eos/user/j/jashley/LLP_Sleptons_RPV_SUSY/generate_events'
+output_dir='/eos/user/j/jashley/LLP_Sleptons_RPV_SUSY/generate_events/data'
 # --- End of Header --- #
 
 source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_ATLAS_6/x86_64-centos9-gcc11-opt/setup.sh
