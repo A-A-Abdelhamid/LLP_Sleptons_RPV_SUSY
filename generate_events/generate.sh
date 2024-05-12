@@ -96,7 +96,7 @@ tar -czf output.tgz $full_run_dir
 
 export EOS_MGM_URL=root://eosuser.cern.ch
 
-eos cp -p output.tgz $output_dir/$run_dir/
+eos cp -p output.tgz $output_dir/$run_dir/*
 
 echo "Files compressed and copied to $output_dir/$run_dir. Contents:"
 ls $output_dir/$run_dir
