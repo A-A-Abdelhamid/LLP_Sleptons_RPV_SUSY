@@ -16,6 +16,7 @@ This process is currently under parallel development in the [LCG-GenerationDuctT
 
 5. *Optionally*, you can uncomment lines 10 and 11 of [submit.sub](https://github.com/A-A-Abdelhamid/LLP_Sleptons_RPV_SUSY/blob/secondary/generate_events/submit.sub) (located in the submission subdirectory) and change the value of notify_user to your email address to get an email when HTCondor updates the status of your job(s). Note that you will receive 1 email per *job*, so if you are generating samples for 5 lifetimes and 5 masses, you will receive 25 emails.
 
+6. Submit to Condor. (See [Batch Generation](https://github.com/A-A-Abdelhamid/LLP_Sleptons_RPV_SUSY/tree/secondary/generate_events#batch-generation) below.)
 ## Customization
 
 This repo is set up to process basic generation parameters in the header of the [generate.sh](https://github.com/j-s-ashley/LCG-GenerationDuctTape/blob/main/generate.sh) file (located in the submission subdirectory). There, you will find variables for:
