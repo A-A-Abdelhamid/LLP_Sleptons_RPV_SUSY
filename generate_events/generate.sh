@@ -9,7 +9,6 @@ model_dir="$PWD/DVMuReint/RPVMSSM_UFO/RPVMSSM_UFO/"
 mass=$1
 lifetime=$2
 
-hbar="$( bc -l <<<"6.582119569/10^16" )"
 hbar="$( awk 'BEGIN {print ( 6.582119569 * (10^-16) ) }' )"
 decay="$( awk 'BEGIN {print ($hbar / $lifetime) }')"
 
