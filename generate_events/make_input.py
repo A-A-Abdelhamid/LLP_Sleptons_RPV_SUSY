@@ -1,4 +1,5 @@
 import numpy as np
+import shutil
 
 f = open("input.txt", "w")
 
@@ -19,5 +20,6 @@ for mass in np.linspace(mass_start, mass_end, num_masses):
         f.write( str(mass) + " " + str(tau) + "\n")
 
 f.close()
+shutil.move("input.txt","submission/input.txt")
 
-print("Input card 'input.txt' created.")
+print("Input card 'input.txt' created and moved to the submission directory.")
