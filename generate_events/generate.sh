@@ -10,7 +10,8 @@ mass=$1
 lifetime=$2
 
 hbar="$( bc -l <<<"6.582119569/10^16" )"
-decay=$(($hbar/$lifetime))
+hbar="$( awk 'BEGIN {print ( 6.582119569 * (10^-16) ) }' )"
+decay="$( awk 'BEGIN {print ($hbar / $lifetime) }')"
 
 run_dir='smu'$mass'gev_'$lifetime'ns'
 
@@ -19,7 +20,6 @@ output_dir='/eos/user/j/jashley/LLP_Sleptons_RPV_SUSY/generate_events'
 # --- End of Header --- #
 
 source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_ATLAS_6/x86_64-centos9-gcc11-opt/setup.sh
-
 echo LCG sourced. Compiling Pythia script.
 
 # --- Pythia Script Compilation --- #
@@ -96,7 +96,7 @@ tar -czf output.tgz $full_run_dir
 
 export EOS_MGM_URL=root://eosuser.cern.ch
 
-eos cp -p output.tgz $output_dir/$run_dir
+eos cp -p output.tgz $output_dir/$run_dir/
 
 echo "Files compressed and copied to $output_dir/$run_dir. Contents:"
 ls $output_dir/$run_dir
