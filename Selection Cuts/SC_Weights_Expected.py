@@ -28,7 +28,7 @@ ROOT.TColor.CreateGradientColorTable(nRGBs, stops, red, green, blue, 255)
 ROOT.gStyle.SetNumberContours(255)
 hist =     ROOT.TH2F("hist", "hist",10, 65, 765, 8, 0, 400)
 hist.SetStats(0)
-# Initialize the ROOT TArrays
+
 Pt = []
 d0 = []
 eff = []
@@ -216,7 +216,7 @@ def triggered(event):
         if abs(particle.pid) in [11, 13] and abs(eta) < 2.5:
             lepton_eta_count += 1
 
-    # Check if the event satisfies the original conditions
+    # Check if the event satisfies the trigger conditions
     if (has_valid_electron or electron_count >= 2 or has_valid_muon) and lepton_eta_count >= 2:
         # Only append the particles if the event satisfies all conditions
         triggered_leptons.extend(potential_leptons)
@@ -269,29 +269,8 @@ with hep.open(hepmc_file) as f:
         if abs(particle.pid) == 13 and particle.status == 1 and particle.momentum.pt()> 65 and CalcEta(particle)> -2.5 and CalcEta(particle) < 2.5 and abs(CalcD0(particle))>3: #and #abs(CalcD0(particle)) <300:
         
           leptons.append(particle)
-         # if abs(CalcD0(particle)) >300:
-          #  print(event.event_number)
-          #  ver = particle.production_vertex.position
-         #   vx = ver.x
-         #   vy = ver.y
-         #   v0_xy = ROOT.TVector3(vx, vy, 0)
-        #    v0_xy_Mag = (vx**2 + vy**2)**0.5
-            
-        #    print("lifetime: ", (1E9*ver.t)/3E11)
-        #    print("Production vertex: ", particle.production_vertex )
-        #    print ("position :", ver )
-        #    print("X: ", vx, " Y: ", vy)
-        #    print("L_xy: ", v0_xy_Mag)
-       #     print("D0: " , CalcD0(particle))
-      #triggered_leptons.sort(key=lambda triggered_leptons: -triggered_leptons.momentum.pt())
-      
-      #if abs(triggered_leptons[0].pid) == 13 and abs(triggered_leptons[1].pid) == 13:
-        #two_mu_count= two_mu_count + 1
-      #for lepton in triggered_leptons:
-        #if lepton.momentum.pt()>65:
-          #pt_count= pt_count+1
-          #break
-          
+        
+       
       leptons.sort(key=lambda lepton: -lepton.momentum.pt())
      
       
@@ -352,7 +331,7 @@ print(f"Area under the histogram (number of surviving events): ", area)
 bincontent =expected.GetBinContent(1)
 error= expected.GetBinError(1)
 print("Bin content: ",bincontent, " error = +/- ", error)
-sigma=  0.0005221 * 1000 # Change this
+sigma=  0.0005221 * 1000 # Change this according to mass, this value is for 400 GeV
 L = 139 #1/fb
 n_gen=20000 # # of generated events
 print("Expected events: ", (area*sigma*L)/n_gen, "  +/- ",((error*sigma*L)/n_gen), " events")
@@ -360,69 +339,3 @@ print("Expected events: ", (area*sigma*L)/n_gen, "  +/- ",((error*sigma*L)/n_gen
 print("Acceptance is ", count/20000)
 print("Effiencey is ", bincontent/count)
 print("Yield is ", bincontent/20000)
-#triggered_events= 20000- nottriggered
-#print ("triggered events =  ", triggered_events)
-#print ("ratio of triggered to total events =  ", triggered_events/20000)
-#print ("in paper it was= ", 66.3/93.6)
-"""
-total_histogram = TH1F()
-passed_histogram = TH1F()
-
-# Fill the histograms with total events and triggered events
-#total_events = 20000  # Total number of events (denominator)
-#passed_events = triggered_events    # Number of passed events (numerator)
-
-#total_histogram.SetBinContent(1, total_events)
-    
-
-#passed_histogram.SetBinContent(1, passed_events)
-   
-
-# Set uncertainties for total and passed events
-#etot= math.sqrt(total_events)
-#epass= math.sqrt(passed_events)
-
-#total_histogram.SetBinError(1, etot)
-#passed_histogram.SetBinError(1, epass)
-
-#eff = TEfficiency(passed_histogram, total_histogram)
-
-#print("Ratio of triggered is ", eff.GetEfficiency(1))
-#print("Error_Low: ",eff.GetEfficiencyErrorLow(1))
-#print("Error_high: ", eff.GetEfficiencyErrorUp(1))
-
-total_histogram_p = TH1F()
-passed_histogram_p = TH1F()
-
-# Fill the histograms with total events and passed events
-total_events_p = 93.6  # Total number of events (denominator)
-passed_events_p = 66.3     # Number of triggered events (numerator)
-
-total_histogram_p.SetBinContent(1, total_events_p)
-    
-
-passed_histogram_p.SetBinContent(1, passed_events_p)
-   
-
-# Set uncertainties for total and passed events
-etot_p= math.sqrt(total_events_p)
-epass_p= math.sqrt(passed_events_p)
-
-total_histogram_p.SetBinError(1, etot_p)
-passed_histogram_p.SetBinError(1, epass_p)
-
-eff_p = TEfficiency(passed_histogram_p, total_histogram_p)
-
-print("paper ratio of triggered is ", eff_p.GetEfficiency(1))
-print("Error_Low: ",eff_p.GetEfficiencyErrorLow(1))
-print("Error_high: ", eff_p.GetEfficiencyErrorUp(1))
-
-#print (eff.GetEfficiency(1) - eff.GetEfficiencyErrorLow(1))
-#print (eff_p.GetEfficiency(1)+eff_p.GetEfficiencyErrorUp(1))
-print ("number of events with 2 leading mu = ", two_mu_count)
-print ("ratioof events with 2 leading mu to generated = ", two_mu_count/20000)
-
-
-print ("number of events with pt> 65 GeV = ", pt_count)
-print ("ratioof events with pt> 65 GeV = ", pt_count/20000)
-"""
