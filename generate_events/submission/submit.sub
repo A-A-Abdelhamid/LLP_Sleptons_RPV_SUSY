@@ -1,0 +1,13 @@
+executable		= generate.sh
+arguments		= $(mass) $(tau)
+output			= output/$(mass)$(tau).out
+error 			= error/$(mass)$(tau).err
+log 			= log/$(mass)$(tau).log
+
+transfer_input_files	= main42.cc, main42.cmnd, param_card_default.dat
+transfer_output_files	= ""
+
+#notification 		= Always
+#notify_user		= email@address.extension
+
+queue mass,tau from input.txt
