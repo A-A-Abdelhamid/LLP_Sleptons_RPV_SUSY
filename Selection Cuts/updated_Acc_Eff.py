@@ -150,40 +150,6 @@ def eff_func (lepton):
   eff_value= hist_eff.GetBinContent(binX, binY)
   return eff_value
 
-def triggered(event):
-    global triggered_leptons
-    potential_leptons = []  # Temporary list to hold leptons that meet individual criteria
-    has_valid_electron = False
-    has_valid_muon = False
-    electron_count = 0
-    lepton_eta_count = 0  # Count of leptons with eta < 2.5
-    
-    for particle in event.particles:
-        if particle.status != 1:  # Consider only final state particles
-            continue
-
-        eta = CalcEta(particle)
-        if abs(particle.pid) == 11 and particle.momentum.pt() > 60:  # Electron
-            if particle.momentum.pt() > 160:
-                has_valid_electron = True
-               
-            
-            electron_count += 1
-                
-
-        if abs(particle.pid) == 13 and particle.momentum.pt() > 60 and abs(eta) < 1.07:  # Muon
-            
-          has_valid_muon = True
-               
-
-    # Check if the event satisfies the trigger conditions
-    if (has_valid_electron or electron_count >= 2 or has_valid_muon):
-        # Only append the particles if the event satisfies all conditions
-    
-      return True
-
-    return False
-    
 hist_10ns = ROOT.TH1F("Yield_10ns","Yield_10ns",1,0,1)
 hist = ROOT.TH1F("Yield","Yield",1,0,1)
 
