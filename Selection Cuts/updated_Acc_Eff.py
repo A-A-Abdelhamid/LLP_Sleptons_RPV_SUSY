@@ -191,13 +191,12 @@ with hep.open(hepmc_file_10ns) as f:
   count_10ns=0
   
   for event in f:
+    
     trigger= False
     
     has_valid_electron = False
     has_valid_muon = False
     electron_count = 0
-
-    
    
     leptons_10ns=[]
     for particle in event.particles:
@@ -216,8 +215,11 @@ with hep.open(hepmc_file_10ns) as f:
           if abs(particle.pid) == 13 and particle.momentum.pt() > 60 and abs(eta) < 1.07:
             
             has_valid_muon = True
-        
-    if (has_valid_electron or electron_count >= 2 or has_valid_muon) != True:
+            
+    if (has_valid_electron or electron_count >= 2 or has_valid_muon):
+      trigger= True
+      
+    if trigger == False:
       continue
       
     leptons_10ns = sorted(leptons_10ns, key=lambda p: p.momentum.pt(), reverse=True)
@@ -230,8 +232,8 @@ with hep.open(hepmc_file_10ns) as f:
       if abs(CalcD0(leptons_10ns[0])) <3 or abs(CalcD0(leptons_10ns[1])) < 3:
         continue
         
-      #if abs(CalcEta(leptons_10ns[0])) > 1.07 or abs(CalcEta(leptons_10ns[1])) > 1.07:
-        #continue
+      if abs(CalcEta(leptons_10ns[0])) > 1.07 or abs(CalcEta(leptons_10ns[1])) > 1.07:
+        continue
       
     
       vec0= CreateVec(leptons_10ns[0])
@@ -280,7 +282,10 @@ with hep.open(hepmc_file_zero_dot_1ns) as f:
             
             has_valid_muon = True
         
-    if (has_valid_electron or electron_count >= 2 or has_valid_muon) != True:
+    if (has_valid_electron or electron_count >= 2 or has_valid_muon):
+      trigger= True
+      
+    if trigger == False:
       continue
         
     leptons = sorted(leptons, key=lambda p: p.momentum.pt(), reverse=True)
@@ -293,8 +298,8 @@ with hep.open(hepmc_file_zero_dot_1ns) as f:
       if abs(CalcD0(leptons[0])) <3 or abs(CalcD0(leptons[1])) < 3:
         continue
         
-      #if abs(CalcEta(leptons[0])) > 1.07 or abs(CalcEta(leptons[1])) > 1.07:
-        #continue
+      if abs(CalcEta(leptons[0])) > 1.07 or abs(CalcEta(leptons[1])) > 1.07:
+        continue
       
     
       vec0= CreateVec(leptons[0])
