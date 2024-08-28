@@ -369,7 +369,7 @@ for mass in masses:
     print(f"Acceptance for {mass}GeV 0.1 ns is {count_zero_dot_1ns} out of 20000 = {count_zero_dot_1ns/20000}")
 
     with hep.open(hepmc_file_zero_zero_1ns) as f:
-        print(f"Elapsed time before reading file {hepmc_zero_zero_1ns}: {time.time() - start_time:.2f} seconds")
+        print(f"Elapsed time before reading file {hepmc_file_zero_zero_1ns}: {time.time() - start_time:.2f} seconds")
         count_zero_zero_1ns = 0
         for event in f:
           trigger= False
